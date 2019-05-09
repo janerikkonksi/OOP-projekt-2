@@ -1,11 +1,17 @@
 import javafx.application.Application;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.Labeled;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.*;
 import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
+
+import javax.swing.*;
 import java.util.Arrays;
 import java.util.List;
 
@@ -58,28 +64,17 @@ public class Mdea extends Application {
         valikuteRuudustik.getRowConstraints().addAll(rida0,rida1,rida2,rida3,rida4,rida5);
 
 
-    /*    // teemad
-        Text teema1 = new Text("Teema1");
-        Text teema2 = new Text("Teema2");
-        Text teema3 = new Text("Teema3");
-        Text teema4 = new Text("Teema4");
-        Text teema5 = new Text("Teema5");
+        // teemad
+        Label teema1 = new Label("Teema1");
+        Label teema2 = new Label("Teema2");
+        Label teema3 = new Label("Teema3");
+        Label teema4 = new Label("Teema4");
+        Label teema5 = new Label("Teema5");
 
-        List<Text> teemad = Arrays.asList(teema1,teema2,teema3,teema4,teema5);
-        for (int i = 0; i < teemad.size(); i++) {
-            Text teema = teemad.get(i);
-            valikuteRuudustik.add(teema,i,0);
-        }*/
+        List<Labeled> teemad = Arrays.asList(teema1,teema2,teema3,teema4,teema5);
+        lisaNupud(teemad, valikuteRuudustik,0);
 
-        Button teema1 = new Button("Teema 1");
-        Button teema2 = new Button("Teema 2");
-        Button teema3 = new Button("Teema 3");
-        Button teema4 = new Button("Teema 4");
-        Button teema5 = new Button("Teema 5");
-
-        List<Button> teemadeNupud = Arrays.asList(teema1,teema2,teema3,teema4,teema5);
-        teemadeNupud.forEach(nupp -> nupp.setBackground(Background.EMPTY));
-        lisaNupud(teemadeNupud,valikuteRuudustik,0);
+        teemad.forEach(teema -> teema.setAlignment(Pos.CENTER));
 
 
         // 1. rea küsimused
@@ -89,7 +84,7 @@ public class Mdea extends Application {
         Button küsimus100_4 = new Button("100");
         Button küsimus100_5 = new Button("100");
 
-        List<Button> esimeseReaNupud = Arrays.asList(küsimus100_1,küsimus100_2,küsimus100_3,küsimus100_4,küsimus100_5);
+        List<Labeled> esimeseReaNupud = Arrays.asList(küsimus100_1,küsimus100_2,küsimus100_3,küsimus100_4,küsimus100_5);
         lisaNupud(esimeseReaNupud,valikuteRuudustik,1);
 
 
@@ -100,7 +95,7 @@ public class Mdea extends Application {
         Button küsimus200_4 = new Button("200");
         Button küsimus200_5 = new Button("200");
 
-        List<Button> teiseReaNupud = Arrays.asList(küsimus200_1,küsimus200_2,küsimus200_3,küsimus200_4,küsimus200_5);
+        List<Labeled> teiseReaNupud = Arrays.asList(küsimus200_1,küsimus200_2,küsimus200_3,küsimus200_4,küsimus200_5);
         lisaNupud(teiseReaNupud,valikuteRuudustik,2);
 
 
@@ -111,7 +106,7 @@ public class Mdea extends Application {
         Button küsimus300_4 = new Button("300");
         Button küsimus300_5 = new Button("300");
 
-        List<Button> kolmandaReaNupud = Arrays.asList(küsimus300_1,küsimus300_2,küsimus300_3,küsimus300_4,küsimus300_5);
+        List<Labeled> kolmandaReaNupud = Arrays.asList(küsimus300_1,küsimus300_2,küsimus300_3,küsimus300_4,küsimus300_5);
         lisaNupud(kolmandaReaNupud,valikuteRuudustik,3);
 
 
@@ -122,7 +117,7 @@ public class Mdea extends Application {
         Button küsimus400_4 = new Button("400");
         Button küsimus400_5 = new Button("400");
 
-        List<Button> neljandaReaNupud = Arrays.asList(küsimus400_1,küsimus400_2,küsimus400_3,küsimus400_4,küsimus400_5);
+        List<Labeled> neljandaReaNupud = Arrays.asList(küsimus400_1,küsimus400_2,küsimus400_3,küsimus400_4,küsimus400_5);
         lisaNupud(neljandaReaNupud,valikuteRuudustik,4);
 
 
@@ -133,15 +128,15 @@ public class Mdea extends Application {
         Button küsimus500_4 = new Button("500");
         Button küsimus500_5 = new Button("500");
 
-        List<Button> viiendaReaNupud = Arrays.asList(küsimus500_1,küsimus500_2,küsimus500_3,küsimus500_4,küsimus500_5);
+        List<Labeled> viiendaReaNupud = Arrays.asList(küsimus500_1,küsimus500_2,küsimus500_3,küsimus500_4,küsimus500_5);
         lisaNupud(viiendaReaNupud,valikuteRuudustik,5);
 
         peaLava.show();
     }
 
-    public static void lisaNupud(List<Button> nupud, GridPane valikuteRuudustik, int reaNr){
+    public static void lisaNupud(List<Labeled> nupud, GridPane valikuteRuudustik, int reaNr){
         for (int i = 0; i < nupud.size(); i++) {
-            Button nupp = nupud.get(i);
+            Labeled nupp = nupud.get(i);
             valikuteRuudustik.add(nupp,i,reaNr);
             nupp.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
         }
