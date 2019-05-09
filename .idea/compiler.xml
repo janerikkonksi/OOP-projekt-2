@@ -4,6 +4,8 @@
     <bytecodeTargetLevel>
       <module name="OOPI-projekt-2-gradle.main" target="11" />
       <module name="OOPI-projekt-2-gradle.test" target="11" />
+      <module name="OOPi-projekt-2.main" target="11" />
+      <module name="OOPi-projekt-2.test" target="11" />
     </bytecodeTargetLevel>
   </component>
 </project>
