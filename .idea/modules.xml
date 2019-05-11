@@ -2,9 +2,6 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/OOPI-projekt-2-gradle.iml" filepath="$PROJECT_DIR$/OOPI-projekt-2-gradle.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/OOPI-projekt-2-gradle.main.iml" filepath="$PROJECT_DIR$/.idea/modules/OOPI-projekt-2-gradle.main.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/OOPI-projekt-2-gradle.test.iml" filepath="$PROJECT_DIR$/.idea/modules/OOPI-projekt-2-gradle.test.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/oop.OOPI-projekt-2-gradle.iml" filepath="$PROJECT_DIR$/.idea/modules/oop.OOPI-projekt-2-gradle.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/oop.OOPI-projekt-2-gradle.main.iml" filepath="$PROJECT_DIR$/.idea/modules/oop.OOPI-projekt-2-gradle.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/oop.OOPI-projekt-2-gradle.test.iml" filepath="$PROJECT_DIR$/.idea/modules/oop.OOPI-projekt-2-gradle.test.iml" />

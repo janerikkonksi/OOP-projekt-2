@@ -17,7 +17,6 @@ import javafx.scene.text.TextAlignment;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
-
 import javax.swing.*;
 import java.io.*;
 import java.util.ArrayList;
@@ -27,6 +26,7 @@ import java.util.Optional;
 
 @SuppressWarnings("Duplicates")
 public class Mdea extends Application {
+
 
     public static void main(String[] args) {
         launch(args);
@@ -46,26 +46,34 @@ public class Mdea extends Application {
         Optional<String> result = dialog.showAndWait();
         if (result.isPresent()){
             nimi = result.get();
-        } else {
+        }
+        else {
             System.exit(0);
         }
 
         //Loon sisendi põhjal uue mängija
         Mängija uus_mängija = new Mängija(nimi);
 
-
         BorderPane juur = new BorderPane();
-        juur.setMinSize(400, 300);
         Scene scene = new Scene(juur, 600, 400);
         peaLava.setScene(scene);
 
+        // mänguakna minimaalne suurus
+        peaLava.setMinWidth(600);
+        peaLava.setMinHeight(400);
+        // suurust muutes säilitab kõrguse-laiuse suhte
+        peaLava.minWidthProperty().bind(scene.heightProperty().multiply(1.5));
+        peaLava.minHeightProperty().bind(scene.widthProperty().divide(1.5));
 
+
+        // mänguruudustiku loomine
         GridPane valikuteRuudustik = new GridPane();
         valikuteRuudustik.setHgap(5);
         valikuteRuudustik.setVgap(5);
         juur.setCenter(valikuteRuudustik);
 
 
+        // kõik veerud on sama laiusega
         ColumnConstraints veerg1 = new ColumnConstraints();
         veerg1.setPercentWidth(20);
         ColumnConstraints veerg2 = new ColumnConstraints();
@@ -78,6 +86,7 @@ public class Mdea extends Application {
         veerg5.setPercentWidth(20);
         valikuteRuudustik.getColumnConstraints().addAll(veerg1, veerg2, veerg3, veerg4, veerg5);
 
+        // kõik read on sama k�rgusega
         RowConstraints rida0 = new RowConstraints();
         rida0.setPercentHeight(20);
         RowConstraints rida1 = new RowConstraints();
@@ -93,107 +102,109 @@ public class Mdea extends Application {
         valikuteRuudustik.getRowConstraints().addAll(rida0, rida1, rida2, rida3, rida4, rida5);
 
 
-        // teemad
+        // teemade sildid
         Label teema1 = new Label("Sport");
         Label teema2 = new Label("Ajalugu");
         Label teema3 = new Label("Varia");
         Label teema4 = new Label("Sekslelud");
         Label teema5 = new Label("Autod");
 
-        List<Labeled> teemad = Arrays.asList(teema1, teema2, teema3, teema4, teema5);
-        lisaNupud(teemad, valikuteRuudustik, 0);
 
+        // lisame teemade sildid mängulauale
+        List<Labeled> teemad = Arrays.asList(teema1, teema2, teema3, teema4, teema5);
+        lisaRitta(teemad, valikuteRuudustik, 0);
         teemad.forEach(teema -> teema.setAlignment(Pos.CENTER));
 
 
-        // 1. rea küsimused
-        Button küsimus100_1 = new Button("100");
-        Button küsimus100_2 = new Button("100");
-        Button küsimus100_3 = new Button("100");
-        Button küsimus100_4 = new Button("100");
-        Button küsimus100_5 = new Button("100");
-
-        List<Labeled> esimeseReaNupud = Arrays.asList(küsimus100_1, küsimus100_2, küsimus100_3, küsimus100_4, küsimus100_5);
-        lisaNupud(esimeseReaNupud, valikuteRuudustik, 1);
+        // loeme failist sisse küsimused
+        List<Küsimus> küsimused = loeKüsimused();
 
 
-        // 2. rea küsimused
+        // 1. teema küsimused
+        Button küsimus100_1 = new Button("100"); //Sport
         Button küsimus200_1 = new Button("200");
-        Button küsimus200_2 = new Button("200");
-        Button küsimus200_3 = new Button("200");
-        Button küsimus200_4 = new Button("200");
-        Button küsimus200_5 = new Button("200");
-
-        List<Labeled> teiseReaNupud = Arrays.asList(küsimus200_1, küsimus200_2, küsimus200_3, küsimus200_4, küsimus200_5);
-        lisaNupud(teiseReaNupud, valikuteRuudustik, 2);
-
-
-        // 3. rea küsimused
         Button küsimus300_1 = new Button("300");
-        Button küsimus300_2 = new Button("300");
-        Button küsimus300_3 = new Button("300");
-        Button küsimus300_4 = new Button("300");
-        Button küsimus300_5 = new Button("300");
-
-
-        List<Labeled> kolmandaReaNupud = Arrays.asList(küsimus300_1, küsimus300_2, küsimus300_3, küsimus300_4, küsimus300_5);
-        lisaNupud(kolmandaReaNupud, valikuteRuudustik, 3);
-
-
-        // 4. rea küsimused
         Button küsimus400_1 = new Button("400");
-        Button küsimus400_2 = new Button("400");
-        Button küsimus400_3 = new Button("400");
-        Button küsimus400_4 = new Button("400");
-        Button küsimus400_5 = new Button("400");
-
-        List<Labeled> neljandaReaNupud = Arrays.asList(küsimus400_1, küsimus400_2, küsimus400_3, küsimus400_4, küsimus400_5);
-        lisaNupud(neljandaReaNupud, valikuteRuudustik, 4);
-
-
-        // 5. rea küsimused
         Button küsimus500_1 = new Button("500");
+
+        // lisame 1. teema küsimused mängulauale
+        List<Labeled> esimeseTeemaNupud = Arrays.asList(küsimus100_1, küsimus200_1, küsimus300_1, küsimus400_1, küsimus500_1);
+        lisaVeergu(esimeseTeemaNupud, valikuteRuudustik, 1);
+
+        // 2. teema küsimused
+        Button küsimus100_2 = new Button("100");
+        Button küsimus200_2 = new Button("200");
+        Button küsimus300_2 = new Button("300");
+        Button küsimus400_2 = new Button("400");
         Button küsimus500_2 = new Button("500");
+
+        // lisame 2. teema küsimused mängulauale
+        List<Labeled> teiseTeemaNupud = Arrays.asList(küsimus100_2, küsimus200_2,küsimus300_2,küsimus400_2,küsimus500_2 );
+        lisaVeergu(teiseTeemaNupud, valikuteRuudustik, 2);
+
+
+        // 3. teema küsimused
+        Button küsimus100_3 = new Button("100");
+        Button küsimus200_3 = new Button("200");
+        Button küsimus300_3 = new Button("300");
+        Button küsimus400_3 = new Button("400");
         Button küsimus500_3 = new Button("500");
+
+        // lisame 3. teema küsimused mängulauale
+        List<Labeled> kolmandaTeemaNupud = Arrays.asList(küsimus100_3,küsimus200_3,küsimus300_3,küsimus400_3,küsimus500_3);
+        lisaVeergu(kolmandaTeemaNupud, valikuteRuudustik, 3);
+
+        // 4. teema küsimused
+        Button küsimus100_4 = new Button("100");
+        Button küsimus200_4 = new Button("200");
+        Button küsimus300_4 = new Button("300");
+        Button küsimus400_4 = new Button("400");
         Button küsimus500_4 = new Button("500");
+
+        // lisame 4. teema küsimused mängulauale
+        List<Labeled> neljandaTeemaNupud = Arrays.asList(küsimus100_4,küsimus200_4,küsimus300_4,küsimus400_4,küsimus500_4);
+        lisaVeergu(neljandaTeemaNupud, valikuteRuudustik, 4);
+
+        // 5. teema küsimused
+        Button küsimus100_5 = new Button("100");
+        Button küsimus200_5 = new Button("200");
+        Button küsimus300_5 = new Button("300");
+        Button küsimus400_5 = new Button("400");
         Button küsimus500_5 = new Button("500");
 
-        List<Labeled> viiendaReaNupud = Arrays.asList(küsimus500_1, küsimus500_2, küsimus500_3, küsimus500_4, küsimus500_5);
-        lisaNupud(viiendaReaNupud, valikuteRuudustik, 5);
+        // lisame 5. teema küsimused mängulauale
+        List<Labeled> viiendaTeemaNupud = Arrays.asList(küsimus100_5,küsimus200_5,küsimus300_5,küsimus400_5,küsimus500_5);
+        lisaVeergu(viiendaTeemaNupud, valikuteRuudustik, 5);
 
-        List<Küsimus> küsimuste_list = loeKüsimused();
 
+
+        // Sündmuste lisamine küsimuste peale vajutades
         //Kuidagi peab ikka vist parem moodus olema, kuidas seda teha
-        nupuvajutus(küsimus100_1, "Sport", 100);
-        nupuvajutus(küsimus200_1,"Sport", 200);
-        nupuvajutus(küsimus300_1,"Sport", 300);
-        nupuvajutus(küsimus400_1,"Sport", 400);
-        nupuvajutus(küsimus500_1,"Sport", 500);
+        // Teema: sport
+        nupuvajutus(küsimus100_1, "Sport", 100, küsimused);
+        nupuvajutus(küsimus200_1,"Sport", 200, küsimused);
+        nupuvajutus(küsimus300_1,"Sport", 300, küsimused);
+        nupuvajutus(küsimus400_1,"Sport", 400, küsimused);
+        nupuvajutus(küsimus500_1,"Sport", 500, küsimused);
 
 
         // aknasündmuse lisamine
-        peaLava.setOnHiding(new EventHandler<WindowEvent>() {
+        peaLava.setOnCloseRequest(new EventHandler<WindowEvent>() {
             public void handle(WindowEvent event) {
                 // luuakse teine lava
                 Stage kusimus = new Stage();
                 // küsimuse ja kahe nupu loomine
-                Label label = new Label("Kas tõesti tahad kinni panna?");
+                Label label = new Label("Kas soovite tõesti mängimise lõpetada?");
                 Button okButton = new Button("Jah");
                 Button cancelButton = new Button("Ei");
 
                 // sündmuse lisamine nupule Jah
-                okButton.setOnAction(new EventHandler<ActionEvent>() {
-                    public void handle(ActionEvent event) {
-                        kusimus.hide();
-                    }
-                });
+                okButton.setOnAction(event1 -> kusimus.hide());
 
                 // sündmuse lisamine nupule Ei
-                cancelButton.setOnAction(new EventHandler<ActionEvent>() {
-                    public void handle(ActionEvent event) {
-                        peaLava.show();
-                        kusimus.hide();
-                    }
+                cancelButton.setOnAction(event12 -> {
+                    peaLava.show();
+                    kusimus.hide();
                 });
 
                 // nuppude grupeerimine
@@ -209,6 +220,7 @@ public class Mdea extends Application {
                 //stseeni loomine ja näitamine
                 Scene stseen2 = new Scene(vBox, 300, 100);
                 kusimus.setScene(stseen2);
+                kusimus.setResizable(false);
                 kusimus.show();
             }
         }); //siin lõpeb aknasündmuse kirjeldus
@@ -216,13 +228,24 @@ public class Mdea extends Application {
         peaLava.show();
     }
 
-    public static void lisaNupud(List<Labeled> nupud, GridPane valikuteRuudustik, int reaNr) {
+
+    public static void lisaRitta(List<Labeled> nupud, GridPane valikuteRuudustik, int reaNr) {
+        for (int i = 0; i < nupud.size(); i++) {
+            Labeled silt = nupud.get(i);
+            valikuteRuudustik.add(silt, i, reaNr);
+            silt.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
+        }
+    }
+
+
+    public static void lisaVeergu(List<Labeled> nupud, GridPane valikuteRuudustik, int veeruNr) {
         for (int i = 0; i < nupud.size(); i++) {
             Labeled nupp = nupud.get(i);
-            valikuteRuudustik.add(nupp, i, reaNr);
+            valikuteRuudustik.add(nupp, veeruNr-1, i+1);
             nupp.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
         }
     }
+
 
     public static List<Küsimus> loeKüsimused() {
         List<Küsimus> küsimute_list = new ArrayList<>();
@@ -248,38 +271,35 @@ public class Mdea extends Application {
                     System.out.println(rida + " - OLI VALESTI KOOSTATUD");
                 }
             }
-        } catch (IOException e) {
+        }
+        catch (IOException e) {
             System.out.println(e);
-            }
-
+        }
 
         return küsimute_list;
     }
 
-    public void nupuvajutus(Button nimi, String teema, int väärtus) {
-        nimi.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                Küsimus uus = loosi_suvaline_küsimus(teema, väärtus);
-                küsimuseAken(uus);
-
-            }
+    public void nupuvajutus(Button nimi, String teema, int väärtus, List<Küsimus> küsimused) {
+        nimi.setOnMouseClicked(event -> {
+            Küsimus uus = loosi_suvaline_küsimus(teema, väärtus, küsimused);
+            küsimuseAken(uus);
         });
     }
 
-    public Küsimus loosi_suvaline_küsimus(String teema, int väärtus) {
-        List<Küsimus> küsimuste_list = loeKüsimused(); //Ei ole väga hea, et iga kord uuesti peab need sisse lugema, vb peaks parameetrina andma
+    public Küsimus loosi_suvaline_küsimus(String teema, int väärtus, List<Küsimus> küsimused) {
+
         Küsimus loositav_küsimus;
 
-        //No see lahendus suht halb, pigem võiks sisselugemisel juba teemade ja väärtuste järgi jagada aga noh tuleks liiga palju liste ja see töötab xd :D :D
+        // No see lahendus suht halb, pigem võiks sisselugemisel juba teemade ja väärtuste järgi jagada
+        // aga noh tuleks liiga palju liste ja see töötab xd :D :D
         while (true) {
-            int max = küsimuste_list.size();
+            int max = küsimused.size();
             int min = 0;
             int range = max - min;
 
                 int rand = (int)(Math.random() * range) + min;
 
-                loositav_küsimus = küsimuste_list.get(rand);
+                loositav_küsimus = küsimused.get(rand);
 
                 if (teema.equals(loositav_küsimus.getTeema()) && loositav_küsimus.getVäärtus() == väärtus) {
                     return loositav_küsimus;
@@ -378,8 +398,13 @@ public class Mdea extends Application {
         else{
             tekst.setText("Sinu vastus on vale.");
             tekst.setFill(Color.RED);
-            Text õigeVastus = new Text("Õiged vastused:" + System.lineSeparator() + "\t" + küsimus.getÕigeVastus());
+            Text õigeVastus = new Text("Õige(d) vastused:" + System.lineSeparator() + "\t" + küsimus.getÕigeVastus());
             vbox.getChildren().add(õigeVastus);
+            valik1.setDisable(true);
+            valik2.setDisable(true);
+            valik3.setDisable(true);
+            valik4.setDisable(true);
+            nupp.setDisable(true);
         }
 
 
