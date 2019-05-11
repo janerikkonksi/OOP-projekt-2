@@ -340,6 +340,7 @@ public class Mdea extends Application {
 
     }
 
+    //Siin klassis veits palju kordusi
     public static void tagasiside(Button nupp,CheckBox valik1, CheckBox valik2, CheckBox valik3,CheckBox valik4, VBox vbox, Text tekst, Küsimus küsimus){
         if(valik1.isSelected() && küsimus.getÕige_vastuse_nr() == 0){
             tekst.setText("Sinu vastus on õige. Said juurde: " + küsimus.getVäärtus() + " punkti");
