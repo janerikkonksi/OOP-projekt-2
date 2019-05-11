@@ -5,14 +5,13 @@ import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.Labeled;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
@@ -236,7 +235,9 @@ public class Mdea extends Application {
         nimi.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                System.out.println(loosi_suvaline_küsimus(teema, väärtus));
+                Küsimus uus = loosi_suvaline_küsimus(teema, väärtus);
+                küsimuseAken(uus);
+
             }
         });
     }
@@ -259,5 +260,53 @@ public class Mdea extends Application {
                 }
 
         }
+    }
+    public void küsimuseAken(Küsimus uus_küsimus) {
+
+        Stage newStage = new Stage();
+        BorderPane piir = new BorderPane(); //sellega ei lisata childreneid vaid positsioonidele lisamisega.
+
+        Label l = new Label(uus_küsimus.getKüsimus());
+        piir.setTop(l);
+
+
+        Button submit = new Button("Submit");
+        piir.setCenter(submit);
+        String[] names = new String[]{uus_küsimus.getVastus1(), uus_küsimus.getVastus2(), uus_küsimus.getVastus3(),
+                uus_küsimus.getVastus4()};
+
+        CheckBox[] cbs = new CheckBox[names.length];
+        VBox vbox = new VBox();
+
+        for (int i = 0; i < names.length; i++) {
+            cbs[i] = new CheckBox(names[i]);
+        }
+        vbox.getChildren().addAll(cbs);
+        piir.setLeft(vbox);
+
+        Label l1 = new Label();
+        piir.setBottom(l1);
+
+        submit.setOnAction((ActionEvent e) -> {
+            if (cbs[uus_küsimus.getÕige_vastuse_nr()].isSelected()) {
+                l1.setText("Sinu vastus on õige");
+                l1.setTextFill(Color.web("#00FF00"));
+            }
+            else  {
+                l1.setText("Sinu vastus on vale");
+                l1.setTextFill(Color.web("#FF0000"));
+
+            }
+        });
+
+
+
+
+            Scene stageScene = new Scene(piir, 500, 200);
+            newStage.setScene(stageScene);
+            newStage.setTitle("Küsimus");
+            newStage.setResizable(false);
+            newStage.show();
+
     }
 }
