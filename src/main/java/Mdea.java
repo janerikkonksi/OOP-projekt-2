@@ -69,10 +69,10 @@ public class Mdea extends Application {
 
         // teemad
         Label teema1 = new Label("Sport");
-        Label teema2 = new Label("Teema2");
-        Label teema3 = new Label("Teema3");
-        Label teema4 = new Label("Teema4");
-        Label teema5 = new Label("Teema5");
+        Label teema2 = new Label("Ajalugu");
+        Label teema3 = new Label("Varia");
+        Label teema4 = new Label("Sekslelud");
+        Label teema5 = new Label("Autod");
 
         List<Labeled> teemad = Arrays.asList(teema1, teema2, teema3, teema4, teema5);
         lisaNupud(teemad, valikuteRuudustik, 0);

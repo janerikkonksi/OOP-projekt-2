@@ -22,4 +22,36 @@ public class Küsimus {
         this.õige_vastuse_nr = õige_vastuse_nr;
         this.väärtus = väärtus;
     }
+
+    public String getTeema() {
+        return teema;
+    }
+
+    public String getKüsimus() {
+        return küsimus;
+    }
+
+    public String getVastus1() {
+        return vastus1;
+    }
+
+    public String getVastus2() {
+        return vastus2;
+    }
+
+    public String getVastus3() {
+        return vastus3;
+    }
+
+    public String getVastus4() {
+        return vastus4;
+    }
+
+    public int getÕige_vastuse_nr() {
+        return õige_vastuse_nr;
+    }
+
+    public int getVäärtus() {
+        return väärtus;
+    }
 }
