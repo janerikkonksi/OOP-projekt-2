@@ -13,7 +13,6 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
-
 import java.io.*;
 import java.net.URL;
 import java.util.ArrayList;
@@ -108,7 +107,7 @@ public class Mdea extends Application {
         Label teema4 = new Label("Sekslelud".toUpperCase());
         Label teema5 = new Label("Autod".toUpperCase());
 
-        List<Labeled> teemad = Arrays.asList(teema1, teema2, teema3, teema4, teema5);
+        List<Label> teemad = Arrays.asList(teema1, teema2, teema3, teema4, teema5);
         teemad.forEach(teema -> teema.setFont(Font.font("Verdana", FontWeight.BOLD, 20)));
 
         // lisame teemade sildid mängulauale
@@ -128,7 +127,7 @@ public class Mdea extends Application {
         Button küsimus500_1 = new Button("500");
 
         // lisame 1. teema küsimused mängulauale
-        List<Labeled> esimeseTeemaNupud = Arrays.asList(küsimus100_1, küsimus200_1, küsimus300_1, küsimus400_1, küsimus500_1);
+        List<Button> esimeseTeemaNupud = Arrays.asList(küsimus100_1, küsimus200_1, küsimus300_1, küsimus400_1, küsimus500_1);
         lisaVeergu(esimeseTeemaNupud, valikuteRuudustik, 1);
 
         // 2. teema küsimused
@@ -139,7 +138,7 @@ public class Mdea extends Application {
         Button küsimus500_2 = new Button("500");
 
         // lisame 2. teema küsimused mängulauale
-        List<Labeled> teiseTeemaNupud = Arrays.asList(küsimus100_2, küsimus200_2,küsimus300_2,küsimus400_2,küsimus500_2 );
+        List<Button> teiseTeemaNupud = Arrays.asList(küsimus100_2, küsimus200_2,küsimus300_2,küsimus400_2,küsimus500_2 );
         lisaVeergu(teiseTeemaNupud, valikuteRuudustik, 2);
 
 
@@ -151,7 +150,7 @@ public class Mdea extends Application {
         Button küsimus500_3 = new Button("500");
 
         // lisame 3. teema küsimused mängulauale
-        List<Labeled> kolmandaTeemaNupud = Arrays.asList(küsimus100_3,küsimus200_3,küsimus300_3,küsimus400_3,küsimus500_3);
+        List<Button> kolmandaTeemaNupud = Arrays.asList(küsimus100_3,küsimus200_3,küsimus300_3,küsimus400_3,küsimus500_3);
         lisaVeergu(kolmandaTeemaNupud, valikuteRuudustik, 3);
 
         // 4. teema küsimused
@@ -162,7 +161,7 @@ public class Mdea extends Application {
         Button küsimus500_4 = new Button("500");
 
         // lisame 4. teema küsimused mängulauale
-        List<Labeled> neljandaTeemaNupud = Arrays.asList(küsimus100_4,küsimus200_4,küsimus300_4,küsimus400_4,küsimus500_4);
+        List<Button> neljandaTeemaNupud = Arrays.asList(küsimus100_4,küsimus200_4,küsimus300_4,küsimus400_4,küsimus500_4);
         lisaVeergu(neljandaTeemaNupud, valikuteRuudustik, 4);
 
         // 5. teema küsimused
@@ -173,7 +172,7 @@ public class Mdea extends Application {
         Button küsimus500_5 = new Button("500");
 
         // lisame 5. teema küsimused mängulauale
-        List<Labeled> viiendaTeemaNupud = Arrays.asList(küsimus100_5,küsimus200_5,küsimus300_5,küsimus400_5,küsimus500_5);
+        List<Button> viiendaTeemaNupud = Arrays.asList(küsimus100_5,küsimus200_5,küsimus300_5,küsimus400_5,küsimus500_5);
         lisaVeergu(viiendaTeemaNupud, valikuteRuudustik, 5);
 
 
@@ -181,70 +180,78 @@ public class Mdea extends Application {
         // Sündmuste lisamine küsimuste peale vajutades
         //Kuidagi peab ikka vist parem moodus olema, kuidas seda teha
         // Teema: sport
-        nupuvajutus(küsimus100_1, "Sport", 100, küsimused);
-        nupuvajutus(küsimus200_1,"Sport", 200, küsimused);
-        nupuvajutus(küsimus300_1,"Sport", 300, küsimused);
-        nupuvajutus(küsimus400_1,"Sport", 400, küsimused);
-        nupuvajutus(küsimus500_1,"Sport", 500, küsimused);
+
+        lisaSündmusedNuppudele(esimeseTeemaNupud,"Sport", küsimused);
 
 
-        // aknasündmuse lisamine
-        peaLava.setOnCloseRequest(new EventHandler<WindowEvent>() {
-            public void handle(WindowEvent event) {
-                // luuakse teine lava
-                Stage kusimus = new Stage();
-                // küsimuse ja kahe nupu loomine
-                Label label = new Label("Kas soovite tõesti mängimise lõpetada?");
-                Button okButton = new Button("Jah");
-                Button cancelButton = new Button("Ei");
+        // aknasündmuse lisamine, kui soovitakse mängu sulgeda
+        aknaSulgemiseKinnitus(peaLava,"Kas soovite tõesti mängimise lõpetada?");
 
-                // sündmuse lisamine nupule Jah
-                okButton.setOnAction(event1 -> kusimus.hide());
-
-                // sündmuse lisamine nupule Ei
-                cancelButton.setOnAction(event12 -> {
-                    peaLava.show();
-                    kusimus.hide();
-                });
-
-                // nuppude grupeerimine
-                FlowPane pane = new FlowPane(10, 10);
-                pane.setAlignment(Pos.CENTER);
-                pane.getChildren().addAll(okButton, cancelButton);
-
-                // küsimuse ja nuppude gruppi paigutamine
-                VBox vBox = new VBox(10);
-                vBox.setAlignment(Pos.CENTER);
-                vBox.getChildren().addAll(label, pane);
-
-                //stseeni loomine ja näitamine
-                Scene stseen2 = new Scene(vBox, 300, 100);
-                kusimus.setScene(stseen2);
-                kusimus.setResizable(false);
-                kusimus.show();
-            }
-        }); //siin lõpeb aknasündmuse kirjeldus
+        peaLava.show();
 
         peaLava.show();
     }
 
 
-    public static void lisaRitta(List<Labeled> nupud, GridPane valikuteRuudustik, int reaNr) {
-        for (int i = 0; i < nupud.size(); i++) {
-            Labeled silt = nupud.get(i);
+    public static void lisaRitta(List<Label> sildid, GridPane valikuteRuudustik, int reaNr) {
+        for (int i = 0; i < sildid.size(); i++) {
+            Label silt = sildid.get(i);
             valikuteRuudustik.add(silt, i, reaNr);
             silt.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
         }
     }
 
 
-    public static void lisaVeergu(List<Labeled> nupud, GridPane valikuteRuudustik, int veeruNr) {
+    public static void lisaVeergu(List<Button> nupud, GridPane valikuteRuudustik, int veeruNr) {
         for (int i = 0; i < nupud.size(); i++) {
-            Labeled nupp = nupud.get(i);
+            Button nupp = nupud.get(i);
             valikuteRuudustik.add(nupp, veeruNr-1, i+1);
             nupp.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
         }
     }
+
+    public void lisaSündmusedNuppudele(List<Button> nupud, String teema, List<Küsimus> küsimused){
+        for (int i = 0; i < nupud.size(); i++) {
+            nupuvajutus(nupud.get(i),teema, 100*(i+1), küsimused);
+        }
+    }
+
+    public static void aknaSulgemiseKinnitus(Stage lava, String sõnum){
+        lava.setOnCloseRequest(event -> {
+            // luuakse teine lava
+            Stage kusimus = new Stage();
+            // küsimuse ja kahe nupu loomine
+            Label label = new Label(sõnum);
+            Button okButton = new Button("Jah");
+            Button cancelButton = new Button("Ei");
+
+            // sündmuse lisamine nupule Jah
+            okButton.setOnAction(event1 -> kusimus.hide());
+
+            // sündmuse lisamine nupule Ei
+            cancelButton.setOnAction(event12 -> {
+                lava.show();
+                kusimus.hide();
+            });
+
+            // nuppude grupeerimine
+            FlowPane pane = new FlowPane(10, 10);
+            pane.setAlignment(Pos.CENTER);
+            pane.getChildren().addAll(okButton, cancelButton);
+
+            // küsimuse ja nuppude gruppi paigutamine
+            VBox vBox = new VBox(10);
+            vBox.setAlignment(Pos.CENTER);
+            vBox.getChildren().addAll(label, pane);
+
+            //stseeni loomine ja näitamine
+            Scene stseen2 = new Scene(vBox, 300, 100);
+            kusimus.setScene(stseen2);
+            kusimus.setResizable(false);
+            kusimus.show();
+        }); //siin lõpeb aknasündmuse kirjeldus
+    }
+
 
 
     public static List<Küsimus> loeKüsimused() {
@@ -283,6 +290,7 @@ public class Mdea extends Application {
         nimi.setOnMouseClicked(event -> {
             Küsimus uus = loosi_suvaline_küsimus(teema, väärtus, küsimused);
             küsimuseAken(uus);
+            nimi.setDisable(true);
         });
     }
 
@@ -307,7 +315,7 @@ public class Mdea extends Application {
 
         }
     }
-    public void küsimuseAken(Küsimus uus_küsimus) {
+    public static void küsimuseAken(Küsimus uus_küsimus) {
 
         //Mängija uus_mängija = mängija; //mdea lisan punkte mängijale
         Stage newStage = new Stage();
@@ -335,18 +343,11 @@ public class Mdea extends Application {
 
         Text tekst2 = new Text();
 
-        class Käsitleja implements EventHandler<MouseEvent> {
-            private Button nupp;
+        // kui üritatakse akent kinni panna enne vastamist
+        aknaSulgemiseKinnitus(newStage, "Olete kindel, et ei soovi küsimusele vastata?");
 
-            public Käsitleja(Button nupp) {
-                this.nupp = nupp;
-            }
-
-            public void handle(MouseEvent me) {
-
-            }
-        }
-        nupp.setOnMouseClicked(event -> tagasiside(nupp,valik1,valik2,valik3,valik4,vbox,tekst2, uus_küsimus));
+        // vastamisel antakse tagasisidet
+        nupp.setOnMouseClicked(event -> tagasiside(nupp,valik1,valik2,valik3,valik4,vbox,tekst2, uus_küsimus, newStage));
 
 
         vbox.getChildren().addAll(tekst,valik1, valik2, valik3,valik4, nupp, tekst2);
@@ -359,35 +360,37 @@ public class Mdea extends Application {
         newStage.setResizable(false);
         newStage.show();
 
-
-
     }
 
     //Siin klassis veits palju kordusi
     public static void tagasiside(Button nupp,CheckBox valik1, CheckBox valik2, CheckBox valik3,
-                                  CheckBox valik4, VBox vbox, Text tekst, Küsimus küsimus){
-        if(valik1.isSelected() && küsimus.getÕige_vastuse_nr() == 0){
+                                  CheckBox valik4, VBox vbox, Text tekst, Küsimus küsimus, Stage lava){
+        if(valik1.isSelected() && küsimus.getÕige_vastuse_nr() == 0 && !valik2.isSelected()
+                && !valik3.isSelected() && !valik4.isSelected()){
             tekst.setText("Sinu vastus on õige. Said juurde: " + küsimus.getVäärtus() + " punkti");
             tekst.setFill(Color.GREEN);
             valik1.setTextFill(Color.GREEN);
             valik2.setTextFill(Color.RED);
             valik3.setTextFill(Color.RED);
             valik4.setTextFill(Color.RED);
-        } else if(valik2.isSelected() && küsimus.getÕige_vastuse_nr() == 1) {
+        } else if(valik2.isSelected() && küsimus.getÕige_vastuse_nr() == 1 && !valik1.isSelected()
+                && !valik3.isSelected() && !valik4.isSelected()) {
             tekst.setText("Sinu vastus on õige. Said juurde: " + küsimus.getVäärtus() + " punkti");
             tekst.setFill(Color.GREEN);
             valik2.setTextFill(Color.GREEN);
             valik1.setTextFill(Color.RED);
             valik3.setTextFill(Color.RED);
             valik4.setTextFill(Color.RED);
-        } else if(valik3.isSelected() && küsimus.getÕige_vastuse_nr() == 2) {
+        } else if(valik3.isSelected() && küsimus.getÕige_vastuse_nr() == 2 && !valik1.isSelected()
+                && !valik2.isSelected() && !valik4.isSelected()) {
             tekst.setText("Sinu vastus on õige. Said juurde: " + küsimus.getVäärtus() + " punkti");
             tekst.setFill(Color.GREEN);
             valik3.setTextFill(Color.GREEN);
             valik2.setTextFill(Color.RED);
             valik1.setTextFill(Color.RED);
             valik4.setTextFill(Color.RED);
-        } else if(valik4.isSelected() && küsimus.getÕige_vastuse_nr() == 3) {
+        } else if(valik4.isSelected() && küsimus.getÕige_vastuse_nr() == 3 && !valik1.isSelected()
+                && !valik2.isSelected() && !valik3.isSelected()) {
             tekst.setText("Sinu vastus on õige. Said juurde: " + küsimus.getVäärtus() + " punkti");
             tekst.setFill(Color.GREEN);
             valik4.setTextFill(Color.GREEN);
@@ -408,6 +411,9 @@ public class Mdea extends Application {
         valik3.setDisable(true);
         valik4.setDisable(true);
         nupp.setDisable(true);
+
+        // kui on küsimusele vastatud, siis küsimuse akent sulgedes ei küsita kinnitust suglemise kohta
+        lava.setOnCloseRequest(event -> lava.hide());
 
     }
 
