@@ -1,1 +1,1 @@
-ajalugu; Kes oli Eesti esimene president?;Arnold Rüütel; Lennart Meri; Konstantin Päts; Toomas Hendrik Ilves; 3; 100
+ajalugu; Kes oli Eesti esimene president?;Arnold Rüütel; Lennart Meri; Konstantin Päts; Toomas Hendrik Ilves; 3; 200
