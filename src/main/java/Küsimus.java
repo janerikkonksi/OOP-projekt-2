@@ -54,4 +54,9 @@ public class Küsimus {
     public int getVäärtus() {
         return väärtus;
     }
+
+    @Override
+    public String toString() {
+        return küsimus;
+    }
 }

@@ -1,5 +1,6 @@
 import com.sun.javafx.iio.ios.IosDescriptor;
 import javafx.application.Application;
+import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -7,6 +8,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Labeled;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
@@ -17,7 +19,7 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
+@SuppressWarnings("Duplicates")
 public class Mdea extends Application {
 
     public static void main(String[] args) {
@@ -81,7 +83,7 @@ public class Mdea extends Application {
 
 
         // 1. rea küsimused
-        Button küsimus100_1 = new Button("100");
+        Button küsimus100_1 = new Button("100"); //Sport
         Button küsimus100_2 = new Button("100");
         Button küsimus100_3 = new Button("100");
         Button küsimus100_4 = new Button("100");
@@ -109,6 +111,7 @@ public class Mdea extends Application {
         Button küsimus300_4 = new Button("300");
         Button küsimus300_5 = new Button("300");
 
+
         List<Labeled> kolmandaReaNupud = Arrays.asList(küsimus300_1, küsimus300_2, küsimus300_3, küsimus300_4, küsimus300_5);
         lisaNupud(kolmandaReaNupud, valikuteRuudustik, 3);
 
@@ -133,6 +136,13 @@ public class Mdea extends Application {
 
         List<Labeled> viiendaReaNupud = Arrays.asList(küsimus500_1, küsimus500_2, küsimus500_3, küsimus500_4, küsimus500_5);
         lisaNupud(viiendaReaNupud, valikuteRuudustik, 5);
+
+        //Kuidagi peab ikka vist parem moodus olema, kuidas seda teha
+        nupuvajutus(küsimus100_1, "Sport", 100);
+        nupuvajutus(küsimus200_1,"Sport", 200);
+        nupuvajutus(küsimus300_1,"Sport", 300);
+        nupuvajutus(küsimus400_1,"Sport", 400);
+        nupuvajutus(küsimus500_1,"Sport", 500);
 
         peaLava.show();
     }
@@ -161,13 +171,48 @@ public class Mdea extends Application {
 
                 String[] tükid = rida.split(";");
 
-                Küsimus uus_küsimus = new Küsimus(tükid[0],tükid[1],tükid[2],tükid[3],tükid[4],tükid[5], Integer.parseInt(tükid[6]), Integer.parseInt(tükid[7]));
-                küsimute_list.add(uus_küsimus);
+                if (tükid.length == 8) { // igaksjuhuks, äkki küsimus on valesti koostatud, siis jätab vahele, mitte ei jookse kokku
+                    Küsimus uus_küsimus = new Küsimus(tükid[0], tükid[1], tükid[2], tükid[3], tükid[4], tükid[5], Integer.parseInt(tükid[6]), Integer.parseInt(tükid[7]));
+                    küsimute_list.add(uus_küsimus);
+                }
+                if (tükid.length != 8) {
+                    System.out.println(rida + " - oli valesti koostatud");
+                }
             }
-        } catch (IOException a) {
-            System.out.println(a.getMessage());
-        }
+        } catch (IOException e) {
+            System.out.println(e);
+            }
+
 
         return küsimute_list;
+    }
+
+    public void nupuvajutus(Button nimi, String teema, int väärtus) {
+        nimi.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                System.out.println(loosi_suvaline_küsimus(teema, väärtus));
+            }
+        });
+    }
+
+    public Küsimus loosi_suvaline_küsimus(String teema, int väärtus) {
+        List<Küsimus> küsimuste_list = loeKüsimused();
+        Küsimus loositav_küsimus;
+
+        while (true) {
+            int max = küsimuste_list.size();
+            int min = 0;
+            int range = max - min;
+
+                int rand = (int)(Math.random() * range) + min;
+
+                loositav_küsimus = küsimuste_list.get(rand);
+
+                if (teema.equals(loositav_küsimus.getTeema()) && loositav_küsimus.getVäärtus() == väärtus) {
+                    return loositav_küsimus;
+                }
+
+        }
     }
 }
