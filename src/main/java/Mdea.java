@@ -296,7 +296,7 @@ public class Mdea extends Application {
         vbox.setPadding(new Insets(20));
 
         Text tekst = new Text(uus_küsimus.getKüsimus());
-        tekst.setFont(new Font(15));
+        tekst.setFont(new Font(13));
 
         CheckBox valik1 = new CheckBox(uus_küsimus.getVastus1());
         CheckBox valik2 = new CheckBox(uus_küsimus.getVastus2());
