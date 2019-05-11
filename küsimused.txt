@@ -1,7 +1,7 @@
 Ajalugu;Kes oli Eesti esimene president?;Arnold Rüütel;Lennart Meri;Konstantin Päts;Toomas Hendrik Ilves;2;200
 Sport;Kus toimusid antiikolümpiamängud?;Ateena;Olümpia;Sparta;Rõuge;1;300
 Sport;Kuidas ja mille abil süüdatakse olümpiatuli enne kui see alustab teekonda võistluspaika?;tikkudest;tõrvikust;päikesekiirtest;lõkkest;2;300
-Sport;Mis aastal toimusid esimesed antiikolümpiamängud?;213 su ema;776 a.e.m.a.;1912 a.;eile;2;400
-Sport;Olümpiamängudel on oma.... ;laul;hümn;luuletus;pärimus;2;500
-Sport;Kas naistel oli õigus osa võtta antiikolümpiamängudest?;Ei;Jah;Mõnel oli;Ainult milfidel;1;100
-Sport;Kust tuuakse võistluspaika olümpiatuli?;Kuubast;Itaaliast;Club Tartust;Kreekast;1;200
+Sport;Mis aastal toimusid esimesed antiikolümpiamängud?;213 su ema;776 a.e.m.a.;1912 a.;eile;1;400
+Sport;Olümpiamängudel on oma.... ;laul;hümn;luuletus;pärimus;1;500
+Sport;Kas naistel oli õigus osa võtta antiikolümpiamängudest?;Ei;Jah;Mõnel oli;Ainult milfidel;0;100
+Sport;Kust tuuakse võistluspaika olümpiatuli?;Kuubast;Itaaliast;Club Tartust;Kreekast;3;200
