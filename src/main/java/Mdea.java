@@ -52,6 +52,7 @@ public class Mdea extends Application {
         Mängija uus_mängija = new Mängija(nimi);
 
         BorderPane juur = new BorderPane();
+        juur.setPadding(new Insets(5));
         Scene scene = new Scene(juur, 750, 500);
         scene.getStylesheets().add("style.css");
         peaLava.setScene(scene);
