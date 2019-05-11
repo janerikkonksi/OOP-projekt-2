@@ -271,6 +271,7 @@ public class Mdea extends Application {
         List<Küsimus> küsimuste_list = loeKüsimused(); //Ei ole väga hea, et iga kord uuesti peab need sisse lugema, vb peaks parameetrina andma
         Küsimus loositav_küsimus;
 
+        //No see lahendus suht halb, pigem võiks sisselugemisel juba teemade ja väärtuste järgi jagada aga noh tuleks liiga palju liste ja see töötab xd :D :D
         while (true) {
             int max = küsimuste_list.size();
             int min = 0;
