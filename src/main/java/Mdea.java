@@ -1,24 +1,21 @@
-import com.sun.javafx.iio.ios.IosDescriptor;
 import javafx.application.Application;
-import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
-import javafx.scene.text.TextAlignment;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
-import javax.swing.*;
+
 import java.io.*;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -55,7 +52,8 @@ public class Mdea extends Application {
         Mängija uus_mängija = new Mängija(nimi);
 
         BorderPane juur = new BorderPane();
-        Scene scene = new Scene(juur, 600, 400);
+        Scene scene = new Scene(juur, 750, 500);
+        scene.getStylesheets().add("style.css");
         peaLava.setScene(scene);
 
         // mänguakna minimaalne suurus
@@ -103,15 +101,16 @@ public class Mdea extends Application {
 
 
         // teemade sildid
-        Label teema1 = new Label("Sport");
-        Label teema2 = new Label("Ajalugu");
-        Label teema3 = new Label("Varia");
-        Label teema4 = new Label("Sekslelud");
-        Label teema5 = new Label("Autod");
+        Label teema1 = new Label("Sport".toUpperCase());
+        Label teema2 = new Label("Ajalugu".toUpperCase());
+        Label teema3 = new Label("Varia".toUpperCase());
+        Label teema4 = new Label("Sekslelud".toUpperCase());
+        Label teema5 = new Label("Autod".toUpperCase());
 
+        List<Labeled> teemad = Arrays.asList(teema1, teema2, teema3, teema4, teema5);
+        teemad.forEach(teema -> teema.setFont(Font.font("Verdana", FontWeight.BOLD, 20)));
 
         // lisame teemade sildid mängulauale
-        List<Labeled> teemad = Arrays.asList(teema1, teema2, teema3, teema4, teema5);
         lisaRitta(teemad, valikuteRuudustik, 0);
         teemad.forEach(teema -> teema.setAlignment(Pos.CENTER));
 
@@ -297,13 +296,13 @@ public class Mdea extends Application {
             int min = 0;
             int range = max - min;
 
-                int rand = (int)(Math.random() * range) + min;
+            int rand = (int)(Math.random() * range) + min;
 
-                loositav_küsimus = küsimused.get(rand);
+            loositav_küsimus = küsimused.get(rand);
 
-                if (teema.equals(loositav_küsimus.getTeema()) && loositav_küsimus.getVäärtus() == väärtus) {
-                    return loositav_küsimus;
-                }
+            if (teema.equals(loositav_küsimus.getTeema()) && loositav_küsimus.getVäärtus() == väärtus) {
+                return loositav_küsimus;
+            }
 
         }
     }
@@ -317,12 +316,16 @@ public class Mdea extends Application {
         vbox.setPadding(new Insets(20));
 
         Text tekst = new Text(uus_küsimus.getKüsimus());
-        tekst.setFont(new Font(13));
+        tekst.setFont(new Font(15));
 
         CheckBox valik1 = new CheckBox(uus_küsimus.getVastus1());
+        valik1.setFont(new Font(13));
         CheckBox valik2 = new CheckBox(uus_küsimus.getVastus2());
+        valik1.setFont(new Font(13));
         CheckBox valik3 = new CheckBox(uus_küsimus.getVastus3());
+        valik1.setFont(new Font(13));
         CheckBox valik4 = new CheckBox(uus_küsimus.getVastus4());
+        valik1.setFont(new Font(13));
 
         Button nupp = new Button();
         nupp.setPrefSize(50, 30);
@@ -349,7 +352,6 @@ public class Mdea extends Application {
         juur.getChildren().add(vbox);
 
 
-
         Scene stageScene = new Scene(juur, 550, 350);
         newStage.setScene(stageScene);
         newStage.setTitle("Küsimus");
@@ -361,7 +363,8 @@ public class Mdea extends Application {
     }
 
     //Siin klassis veits palju kordusi
-    public static void tagasiside(Button nupp,CheckBox valik1, CheckBox valik2, CheckBox valik3,CheckBox valik4, VBox vbox, Text tekst, Küsimus küsimus){
+    public static void tagasiside(Button nupp,CheckBox valik1, CheckBox valik2, CheckBox valik3,
+                                  CheckBox valik4, VBox vbox, Text tekst, Küsimus küsimus){
         if(valik1.isSelected() && küsimus.getÕige_vastuse_nr() == 0){
             tekst.setText("Sinu vastus on õige. Said juurde: " + küsimus.getVäärtus() + " punkti");
             tekst.setFill(Color.GREEN);
@@ -369,7 +372,6 @@ public class Mdea extends Application {
             valik2.setTextFill(Color.RED);
             valik3.setTextFill(Color.RED);
             valik4.setTextFill(Color.RED);
-            nupp.setDisable(true);
         } else if(valik2.isSelected() && küsimus.getÕige_vastuse_nr() == 1) {
             tekst.setText("Sinu vastus on õige. Said juurde: " + küsimus.getVäärtus() + " punkti");
             tekst.setFill(Color.GREEN);
@@ -377,7 +379,6 @@ public class Mdea extends Application {
             valik1.setTextFill(Color.RED);
             valik3.setTextFill(Color.RED);
             valik4.setTextFill(Color.RED);
-            nupp.setDisable(true);
         } else if(valik3.isSelected() && küsimus.getÕige_vastuse_nr() == 2) {
             tekst.setText("Sinu vastus on õige. Said juurde: " + küsimus.getVäärtus() + " punkti");
             tekst.setFill(Color.GREEN);
@@ -385,7 +386,6 @@ public class Mdea extends Application {
             valik2.setTextFill(Color.RED);
             valik1.setTextFill(Color.RED);
             valik4.setTextFill(Color.RED);
-            nupp.setDisable(true);
         } else if(valik4.isSelected() && küsimus.getÕige_vastuse_nr() == 3) {
             tekst.setText("Sinu vastus on õige. Said juurde: " + küsimus.getVäärtus() + " punkti");
             tekst.setFill(Color.GREEN);
@@ -393,23 +393,22 @@ public class Mdea extends Application {
             valik1.setTextFill(Color.RED);
             valik3.setTextFill(Color.RED);
             valik2.setTextFill(Color.RED);
-            nupp.setDisable(true);
         }
         else{
             tekst.setText("Sinu vastus on vale.");
             tekst.setFill(Color.RED);
             Text õigeVastus = new Text("Õige(d) vastused:" + System.lineSeparator() + "\t" + küsimus.getÕigeVastus());
             vbox.getChildren().add(õigeVastus);
-            valik1.setDisable(true);
-            valik2.setDisable(true);
-            valik3.setDisable(true);
-            valik4.setDisable(true);
-            nupp.setDisable(true);
         }
 
+        // pärast vastamist ei saa enam uuesti vastusevariante valida ega vasta nupule vajutada
+        valik1.setDisable(true);
+        valik2.setDisable(true);
+        valik3.setDisable(true);
+        valik4.setDisable(true);
+        nupp.setDisable(true);
 
     }
-
 
 
 }
