@@ -1,5 +1,6 @@
 import com.sun.javafx.iio.ios.IosDescriptor;
 import javafx.application.Application;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -13,6 +14,7 @@ import javafx.scene.layout.*;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 import javax.swing.*;
 import java.io.*;
@@ -144,6 +146,49 @@ public class Mdea extends Application {
         nupuvajutus(küsimus400_1,"Sport", 400);
         nupuvajutus(küsimus500_1,"Sport", 500);
 
+
+        // aknasündmuse lisamine
+        peaLava.setOnHiding(new EventHandler<WindowEvent>() {
+            public void handle(WindowEvent event) {
+                // luuakse teine lava
+                Stage kusimus = new Stage();
+                // küsimuse ja kahe nupu loomine
+                Label label = new Label("Kas tõesti tahad kinni panna?");
+                Button okButton = new Button("Jah");
+                Button cancelButton = new Button("Ei");
+
+                // sündmuse lisamine nupule Jah
+                okButton.setOnAction(new EventHandler<ActionEvent>() {
+                    public void handle(ActionEvent event) {
+                        kusimus.hide();
+                    }
+                });
+
+                // sündmuse lisamine nupule Ei
+                cancelButton.setOnAction(new EventHandler<ActionEvent>() {
+                    public void handle(ActionEvent event) {
+                        peaLava.show();
+                        kusimus.hide();
+                    }
+                });
+
+                // nuppude grupeerimine
+                FlowPane pane = new FlowPane(10, 10);
+                pane.setAlignment(Pos.CENTER);
+                pane.getChildren().addAll(okButton, cancelButton);
+
+                // küsimuse ja nuppude gruppi paigutamine
+                VBox vBox = new VBox(10);
+                vBox.setAlignment(Pos.CENTER);
+                vBox.getChildren().addAll(label, pane);
+
+                //stseeni loomine ja näitamine
+                Scene stseen2 = new Scene(vBox);
+                kusimus.setScene(stseen2);
+                kusimus.show();
+            }
+        }); //siin lõpeb aknasündmuse kirjeldus
+
         peaLava.show();
     }
 
@@ -176,7 +221,7 @@ public class Mdea extends Application {
                     küsimute_list.add(uus_küsimus);
                 }
                 if (tükid.length != 8) {
-                    System.out.println(rida + " - oli valesti koostatud");
+                    System.out.println(rida + " - OLI VALESTI KOOSTATUD");
                 }
             }
         } catch (IOException e) {
@@ -197,7 +242,7 @@ public class Mdea extends Application {
     }
 
     public Küsimus loosi_suvaline_küsimus(String teema, int väärtus) {
-        List<Küsimus> küsimuste_list = loeKüsimused();
+        List<Küsimus> küsimuste_list = loeKüsimused(); //Ei ole väga hea, et iga kord uuesti peab need sisse lugema, vb peaks parameetrina andma
         Küsimus loositav_küsimus;
 
         while (true) {
