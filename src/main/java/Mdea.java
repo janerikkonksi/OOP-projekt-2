@@ -2,13 +2,16 @@ import com.sun.javafx.iio.ios.IosDescriptor;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Modality;
@@ -20,6 +23,8 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
+
 @SuppressWarnings("Duplicates")
 public class Mdea extends Application {
 
@@ -30,6 +35,24 @@ public class Mdea extends Application {
 
     @Override
     public void start(Stage peaLava) throws Exception {
+
+        //Selle võib teha eraldi meetodiks
+        TextInputDialog dialog = new TextInputDialog("Mari Mustikas");
+        dialog.setTitle("Nime küsimine");
+        dialog.setHeaderText("Kuldvillak");
+        dialog.setContentText("Palun sisesta oma nimi: ");
+
+        String nimi = "";
+        Optional<String> result = dialog.showAndWait();
+        if (result.isPresent()){
+            nimi = result.get();
+        } else {
+            System.exit(0);
+        }
+
+        //Loon sisendi põhjal uue mängija
+        Mängija uus_mängija = new Mängija(nimi);
+
 
         BorderPane juur = new BorderPane();
         juur.setMinSize(400, 300);
@@ -84,7 +107,7 @@ public class Mdea extends Application {
 
 
         // 1. rea küsimused
-        Button küsimus100_1 = new Button("100"); //Sport
+        Button küsimus100_1 = new Button("100");
         Button küsimus100_2 = new Button("100");
         Button küsimus100_3 = new Button("100");
         Button küsimus100_4 = new Button("100");
@@ -138,6 +161,8 @@ public class Mdea extends Application {
         List<Labeled> viiendaReaNupud = Arrays.asList(küsimus500_1, küsimus500_2, küsimus500_3, küsimus500_4, küsimus500_5);
         lisaNupud(viiendaReaNupud, valikuteRuudustik, 5);
 
+        List<Küsimus> küsimuste_list = loeKüsimused();
+
         //Kuidagi peab ikka vist parem moodus olema, kuidas seda teha
         nupuvajutus(küsimus100_1, "Sport", 100);
         nupuvajutus(küsimus200_1,"Sport", 200);
@@ -182,7 +207,7 @@ public class Mdea extends Application {
                 vBox.getChildren().addAll(label, pane);
 
                 //stseeni loomine ja näitamine
-                Scene stseen2 = new Scene(vBox);
+                Scene stseen2 = new Scene(vBox, 300, 100);
                 kusimus.setScene(stseen2);
                 kusimus.show();
             }
@@ -263,50 +288,101 @@ public class Mdea extends Application {
     }
     public void küsimuseAken(Küsimus uus_küsimus) {
 
+        //Mängija uus_mängija = mängija; //mdea lisan punkte mängijale
         Stage newStage = new Stage();
-        BorderPane piir = new BorderPane(); //sellega ei lisata childreneid vaid positsioonidele lisamisega.
+        Group juur = new Group();
 
-        Label l = new Label(uus_küsimus.getKüsimus());
-        piir.setTop(l);
+        VBox vbox = new VBox(20);
+        vbox.setPadding(new Insets(20));
+
+        Text tekst = new Text(uus_küsimus.getKüsimus());
+        tekst.setFont(new Font(15));
+
+        CheckBox valik1 = new CheckBox(uus_küsimus.getVastus1());
+        CheckBox valik2 = new CheckBox(uus_küsimus.getVastus2());
+        CheckBox valik3 = new CheckBox(uus_küsimus.getVastus3());
+        CheckBox valik4 = new CheckBox(uus_küsimus.getVastus4());
+
+        Button nupp = new Button();
+        nupp.setPrefSize(50, 30);
+        nupp.setText("Vasta");
 
 
-        Button submit = new Button("Submit");
-        piir.setCenter(submit);
-        String[] names = new String[]{uus_küsimus.getVastus1(), uus_küsimus.getVastus2(), uus_küsimus.getVastus3(),
-                uus_küsimus.getVastus4()};
+        Text tekst2 = new Text();
 
-        CheckBox[] cbs = new CheckBox[names.length];
-        VBox vbox = new VBox();
+        class Käsitleja implements EventHandler<MouseEvent> {
+            private Button nupp;
 
-        for (int i = 0; i < names.length; i++) {
-            cbs[i] = new CheckBox(names[i]);
+            public Käsitleja(Button nupp) {
+                this.nupp = nupp;
+            }
+
+            public void handle(MouseEvent me) {
+
+            }
         }
-        vbox.getChildren().addAll(cbs);
-        piir.setLeft(vbox);
+        nupp.setOnMouseClicked(event -> tagasiside(nupp,valik1,valik2,valik3,valik4,vbox,tekst2, uus_küsimus));
 
-        Label l1 = new Label();
-        piir.setBottom(l1);
 
-        submit.setOnAction((ActionEvent e) -> {
-            if (cbs[uus_küsimus.getÕige_vastuse_nr()].isSelected()) {
-                l1.setText("Sinu vastus on õige");
-                l1.setTextFill(Color.web("#00FF00"));
-            }
-            else  {
-                l1.setText("Sinu vastus on vale");
-                l1.setTextFill(Color.web("#FF0000"));
-
-            }
-        });
+        vbox.getChildren().addAll(tekst,valik1, valik2, valik3,valik4, nupp, tekst2);
+        juur.getChildren().add(vbox);
 
 
 
+        Scene stageScene = new Scene(juur, 550, 350);
+        newStage.setScene(stageScene);
+        newStage.setTitle("Küsimus");
+        newStage.setResizable(false);
+        newStage.show();
 
-            Scene stageScene = new Scene(piir, 500, 200);
-            newStage.setScene(stageScene);
-            newStage.setTitle("Küsimus");
-            newStage.setResizable(false);
-            newStage.show();
+
 
     }
+
+    public static void tagasiside(Button nupp,CheckBox valik1, CheckBox valik2, CheckBox valik3,CheckBox valik4, VBox vbox, Text tekst, Küsimus küsimus){
+        if(valik1.isSelected() && küsimus.getÕige_vastuse_nr() == 0){
+            tekst.setText("Sinu vastus on õige. Said juurde: " + küsimus.getVäärtus() + " punkti");
+            tekst.setFill(Color.GREEN);
+            valik1.setTextFill(Color.GREEN);
+            valik2.setTextFill(Color.RED);
+            valik3.setTextFill(Color.RED);
+            valik4.setTextFill(Color.RED);
+            nupp.setDisable(true);
+        } else if(valik2.isSelected() && küsimus.getÕige_vastuse_nr() == 1) {
+            tekst.setText("Sinu vastus on õige. Said juurde: " + küsimus.getVäärtus() + " punkti");
+            tekst.setFill(Color.GREEN);
+            valik2.setTextFill(Color.GREEN);
+            valik1.setTextFill(Color.RED);
+            valik3.setTextFill(Color.RED);
+            valik4.setTextFill(Color.RED);
+            nupp.setDisable(true);
+        } else if(valik3.isSelected() && küsimus.getÕige_vastuse_nr() == 2) {
+            tekst.setText("Sinu vastus on õige. Said juurde: " + küsimus.getVäärtus() + " punkti");
+            tekst.setFill(Color.GREEN);
+            valik3.setTextFill(Color.GREEN);
+            valik2.setTextFill(Color.RED);
+            valik1.setTextFill(Color.RED);
+            valik4.setTextFill(Color.RED);
+            nupp.setDisable(true);
+        } else if(valik4.isSelected() && küsimus.getÕige_vastuse_nr() == 3) {
+            tekst.setText("Sinu vastus on õige. Said juurde: " + küsimus.getVäärtus() + " punkti");
+            tekst.setFill(Color.GREEN);
+            valik4.setTextFill(Color.GREEN);
+            valik1.setTextFill(Color.RED);
+            valik3.setTextFill(Color.RED);
+            valik2.setTextFill(Color.RED);
+            nupp.setDisable(true);
+        }
+        else{
+            tekst.setText("Sinu vastus on vale.");
+            tekst.setFill(Color.RED);
+            Text õigeVastus = new Text("Õiged vastused:" + System.lineSeparator() + "\t" + küsimus.getÕigeVastus());
+            vbox.getChildren().add(õigeVastus);
+        }
+
+
+    }
+
+
+
 }

@@ -23,6 +23,21 @@ public class Küsimus {
         this.väärtus = väärtus;
     }
 
+    public String getÕigeVastus() {
+        if (õige_vastuse_nr == 0) {
+            return vastus1;
+        }
+        if (õige_vastuse_nr == 1) {
+            return vastus2;
+        }
+        if (õige_vastuse_nr == 2) {
+            return vastus3;
+        }
+        else {
+            return vastus4;
+        }
+    }
+
     public String getTeema() {
         return teema;
     }
