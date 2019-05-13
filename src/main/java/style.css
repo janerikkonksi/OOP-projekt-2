@@ -1,28 +1,28 @@
 .root{
      -fx-background-color: #05037a;
      -fx-font-size: 11pt;
- }
+}
 
 .label{
     -fx-text-fill: #ff9400;
     -fx-font: bold 20pt "helvetica";
- }
+}
 
- .button{
+.button{
     -fx-background-color: linear-gradient(blue, #001538);
     -fx-background-radius: 10;
     -fx-font: bold 22pt "Tahoma";
     -fx-text-fill: "Orange";
     -fx-text-shadow: 10pt 10pt;
     -fx-effect: dropshadow(one-pass-box , blue , 5 , 0.0 , 1 , 0 );
- }
- .button:hover{
+}
+.button:hover{
     -fx-background-color: linear-gradient(#1650ff, #04255b);
     -fx-text-fill: "Yellow";
     -fx-cursor: hand;
- }
+}
 
- .text-area{
+.text-area{
      -fx-background-color: black;
      -fx-background-radius: 0;
-  }
+}

@@ -10,22 +10,18 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import javax.swing.*;
 import java.io.*;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
 @SuppressWarnings("Duplicates")
-public class Mdea extends Application {
-
-    public Stage peaLava;
+public class Kuldvillak extends Application {
 
     // Loeme küsimused failist sisse
     List<Küsimus> küsimused = loeKüsimused();
-
+    public Stage peaLava;
 
 
     public static void main(String[] args) {
@@ -77,8 +73,7 @@ public class Mdea extends Application {
         juur.setCenter(valikuteRuudustik);
 
 
-
-        // aknasündmuse lisamine, kui soovitakse mängu sulgeda
+        // sündmuse lisamine, kui soovitakse mängu sulgeda
         aknaSulgemiseKinnitus(peaLava,"Kas soovite tõesti mängimise lõpetada?");
 
         peaLava.show();
@@ -89,6 +84,47 @@ public class Mdea extends Application {
 
 
     //// MEETODID ////
+
+    /**
+     * Loeb küsimuste failist sisse seal olevad küsimused, lisab need listi ning tagastab listi.
+     * Küsimuste failis on küsimused kujul(vv=vastusevariant):
+     * "teema;küsimus;vv1;vv2;vv3;vv4;õige vastuse nr;õige vastuse eest saadavad punktid"
+     */
+    public static List<Küsimus> loeKüsimused() {
+        List<Küsimus> küsimute_list = new ArrayList<>();
+
+        try (FileInputStream sisendVoog = new FileInputStream("küsimused.txt");
+             InputStreamReader lugeja = new InputStreamReader(sisendVoog, "UTF-8");
+             BufferedReader puhvriga_lugeja = new BufferedReader(lugeja)) {
+            //Sulgeb ise vood pärast
+
+            while (true) {
+                String rida = puhvriga_lugeja.readLine();
+                if (rida == null) {
+                    break;
+                }
+
+                String[] tükid = rida.split(";");
+
+                // igaksjuhuks kontroll, kas küsimus on õigesti koostatud
+                if (tükid.length == 8) {
+                    Küsimus uus_küsimus = new Küsimus(tükid[0], tükid[1], tükid[2], tükid[3], tükid[4], tükid[5],
+                            Integer.parseInt(tükid[6]), Integer.parseInt(tükid[7]));
+                    küsimute_list.add(uus_küsimus);
+                }
+                // kui valesti koostatud, siis jätab küsimuse vahele, mitte ei jookse kokku
+                else if (tükid.length != 8) {
+                    System.out.println(rida + " - OLI VALESTI KOOSTATUD");
+                }
+            }
+        }
+        catch (IOException e) {
+            System.out.println(e);
+        }
+
+        return küsimute_list;
+    }
+
 
     /**
      * Loob 6 rea ja 5 veeruga mänguruudustiku ja tagastab selle. Iga teema jaoks on 1 veerg ning
@@ -210,6 +246,7 @@ public class Mdea extends Application {
 
     }
 
+
     /**
      * Lisab etteantud sildid mänguruudustikku antud numbriga ritta.
      */
@@ -220,6 +257,7 @@ public class Mdea extends Application {
             silt.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
         }
     }
+
 
     /**
      * Lisab etteantud nupud mänguruudustikku antud numbriga veergu.
@@ -274,47 +312,6 @@ public class Mdea extends Application {
             kusimus.setAlwaysOnTop(true);
         }); //siin lõpeb aknasündmuse kirjeldus
 
-    }
-
-
-    /**
-     * Loeb küsimuste failist sisse seal olevad küsimused, lisab need listi ning tagastab listi.
-     * Küsimuste failis on küsimused kujul(vv=vastusevariant):
-     * "teema;küsimus;vv1;vv2;vv3;vv4;õige vastuse nr;õige vastuse eest saadavad punktid"
-     */
-    public static List<Küsimus> loeKüsimused() {
-        List<Küsimus> küsimute_list = new ArrayList<>();
-
-        try (FileInputStream sisendVoog = new FileInputStream("küsimused.txt");
-             InputStreamReader lugeja = new InputStreamReader(sisendVoog, "UTF-8");
-             BufferedReader puhvriga_lugeja = new BufferedReader(lugeja)) {
-            //Sulgeb ise vood pärast
-
-            while (true) {
-                String rida = puhvriga_lugeja.readLine();
-                if (rida == null) {
-                    break;
-                }
-
-                String[] tükid = rida.split(";");
-
-                // igaksjuhuks kontroll, kas küsimus on õigesti koostatud
-                if (tükid.length == 8) {
-                    Küsimus uus_küsimus = new Küsimus(tükid[0], tükid[1], tükid[2], tükid[3], tükid[4], tükid[5],
-                                                    Integer.parseInt(tükid[6]), Integer.parseInt(tükid[7]));
-                    küsimute_list.add(uus_küsimus);
-                }
-                // kui valesti koostatud, siis jätab küsimuse vahele, mitte ei jookse kokku
-                else if (tükid.length != 8) {
-                    System.out.println(rida + " - OLI VALESTI KOOSTATUD");
-                }
-            }
-        }
-        catch (IOException e) {
-            System.out.println(e);
-        }
-
-        return küsimute_list;
     }
 
 
@@ -422,8 +419,8 @@ public class Mdea extends Application {
 
     }
 
-    //Siin klassis veits palju kordusi
 
+    //Siin klassis veits palju kordusi
     /**
      * Annab antud küsimuse aknas olevale küsimusele vastates samas aknas tagasisidet.
      */
