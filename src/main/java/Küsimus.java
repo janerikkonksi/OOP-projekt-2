@@ -12,7 +12,8 @@ public class Küsimus {
     // KONSTRUKTOR
 
 
-    public Küsimus(String teema, String küsimus, String vastus1, String vastus2, String vastus3, String vastus4, int õige_vastuse_nr, int väärtus) {
+    public Küsimus(String teema, String küsimus, String vastus1, String vastus2, String vastus3, String vastus4,
+                   int õige_vastuse_nr, int väärtus) {
         this.teema = teema;
         this.küsimus = küsimus;
         this.vastus1 = vastus1;

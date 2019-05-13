@@ -23,6 +23,10 @@ public class Mdea extends Application {
 
     public Stage peaLava;
 
+    // Loeme küsimused failist sisse
+    List<Küsimus> küsimused = loeKüsimused();
+
+
 
     public static void main(String[] args) {
         launch(args);
@@ -68,92 +72,10 @@ public class Mdea extends Application {
         peaLava.minHeightProperty().bind(scene.widthProperty().divide(1.5));
 
 
-        // mänguruudustiku loomine
+        // MÄNGURUUDUSTIKU LOOMINE
         GridPane valikuteRuudustik = mänguruudustikuLoomine();
         juur.setCenter(valikuteRuudustik);
 
-
-        // teemade sildid
-        Label teema1 = new Label("Sport".toUpperCase());
-        Label teema2 = new Label("Ajalugu".toUpperCase());
-        Label teema3 = new Label("Varia".toUpperCase());
-        Label teema4 = new Label("Sekslelud".toUpperCase());
-        Label teema5 = new Label("Autod".toUpperCase());
-
-        List<Label> teemad = Arrays.asList(teema1, teema2, teema3, teema4, teema5);
-        teemad.forEach(teema -> teema.setFont(Font.font("Verdana", FontWeight.BOLD, 20)));
-
-        // lisame teemade sildid mängulauale
-        lisaRitta(teemad, valikuteRuudustik, 0);
-        teemad.forEach(teema -> teema.setAlignment(Pos.CENTER));
-
-
-        // loeme failist sisse küsimused
-        List<Küsimus> küsimused = loeKüsimused();
-
-
-        // 1. teema küsimused
-        Button küsimus100_1 = new Button("100"); //Sport
-        Button küsimus200_1 = new Button("200");
-        Button küsimus300_1 = new Button("300");
-        Button küsimus400_1 = new Button("400");
-        Button küsimus500_1 = new Button("500");
-
-        // lisame 1. teema küsimused mängulauale
-        List<Button> esimeseTeemaNupud = Arrays.asList(küsimus100_1, küsimus200_1, küsimus300_1, küsimus400_1, küsimus500_1);
-        lisaVeergu(esimeseTeemaNupud, valikuteRuudustik, 1);
-
-        // 2. teema küsimused
-        Button küsimus100_2 = new Button("100");
-        Button küsimus200_2 = new Button("200");
-        Button küsimus300_2 = new Button("300");
-        Button küsimus400_2 = new Button("400");
-        Button küsimus500_2 = new Button("500");
-
-        // lisame 2. teema küsimused mängulauale
-        List<Button> teiseTeemaNupud = Arrays.asList(küsimus100_2, küsimus200_2,küsimus300_2,küsimus400_2,küsimus500_2 );
-        lisaVeergu(teiseTeemaNupud, valikuteRuudustik, 2);
-
-
-        // 3. teema küsimused
-        Button küsimus100_3 = new Button("100");
-        Button küsimus200_3 = new Button("200");
-        Button küsimus300_3 = new Button("300");
-        Button küsimus400_3 = new Button("400");
-        Button küsimus500_3 = new Button("500");
-
-        // lisame 3. teema küsimused mängulauale
-        List<Button> kolmandaTeemaNupud = Arrays.asList(küsimus100_3,küsimus200_3,küsimus300_3,küsimus400_3,küsimus500_3);
-        lisaVeergu(kolmandaTeemaNupud, valikuteRuudustik, 3);
-
-        // 4. teema küsimused
-        Button küsimus100_4 = new Button("100");
-        Button küsimus200_4 = new Button("200");
-        Button küsimus300_4 = new Button("300");
-        Button küsimus400_4 = new Button("400");
-        Button küsimus500_4 = new Button("500");
-
-        // lisame 4. teema küsimused mängulauale
-        List<Button> neljandaTeemaNupud = Arrays.asList(küsimus100_4,küsimus200_4,küsimus300_4,küsimus400_4,küsimus500_4);
-        lisaVeergu(neljandaTeemaNupud, valikuteRuudustik, 4);
-
-        // 5. teema küsimused
-        Button küsimus100_5 = new Button("100");
-        Button küsimus200_5 = new Button("200");
-        Button küsimus300_5 = new Button("300");
-        Button küsimus400_5 = new Button("400");
-        Button küsimus500_5 = new Button("500");
-
-        // lisame 5. teema küsimused mängulauale
-        List<Button> viiendaTeemaNupud = Arrays.asList(küsimus100_5,küsimus200_5,küsimus300_5,küsimus400_5,küsimus500_5);
-        lisaVeergu(viiendaTeemaNupud, valikuteRuudustik, 5);
-
-
-
-        // Sündmuste lisamine küsimuste peale vajutades
-        //Kuidagi peab ikka vist parem moodus olema, kuidas seda teha
-        // Teema: sport
-        lisaSündmusedNuppudele(esimeseTeemaNupud,"Sport", küsimused);
 
 
         // aknasündmuse lisamine, kui soovitakse mängu sulgeda
@@ -168,11 +90,15 @@ public class Mdea extends Application {
 
     //// MEETODID ////
 
-    public static GridPane mänguruudustikuLoomine(){
+    /**
+     * Loob 6 rea ja 5 veeruga mänguruudustiku ja tagastab selle. Iga teema jaoks on 1 veerg ning
+     * igas veerus on ülevalt esimeses reas teema nimetus ning selle all 5 küsimust.
+     */
+    public GridPane mänguruudustikuLoomine(){
 
-        GridPane valikuteRuudustik = new GridPane();
-        valikuteRuudustik.setHgap(5);
-        valikuteRuudustik.setVgap(5);
+        GridPane mänguRuudustik = new GridPane();
+        mänguRuudustik.setHgap(5);
+        mänguRuudustik.setVgap(5);
 
         // kõik veerud on sama laiusega
         ColumnConstraints veerg1 = new ColumnConstraints();
@@ -185,9 +111,9 @@ public class Mdea extends Application {
         veerg4.setPercentWidth(20);
         ColumnConstraints veerg5 = new ColumnConstraints();
         veerg5.setPercentWidth(20);
-        valikuteRuudustik.getColumnConstraints().addAll(veerg1, veerg2, veerg3, veerg4, veerg5);
+        mänguRuudustik.getColumnConstraints().addAll(veerg1, veerg2, veerg3, veerg4, veerg5);
 
-        // kõik read on sama k�rgusega
+        // kõik read on sama kõrgusega
         RowConstraints rida0 = new RowConstraints();
         rida0.setPercentHeight(20);
         RowConstraints rida1 = new RowConstraints();
@@ -200,36 +126,116 @@ public class Mdea extends Application {
         rida4.setPercentHeight(20);
         RowConstraints rida5 = new RowConstraints();
         rida5.setPercentHeight(20);
-        valikuteRuudustik.getRowConstraints().addAll(rida0, rida1, rida2, rida3, rida4, rida5);
+        mänguRuudustik.getRowConstraints().addAll(rida0, rida1, rida2, rida3, rida4, rida5);
 
-        return valikuteRuudustik;
+
+        // teemade sildid
+        Label teema1 = new Label("Sport".toUpperCase());
+        Label teema2 = new Label("Ajalugu".toUpperCase());
+        Label teema3 = new Label("Varia".toUpperCase());
+        Label teema4 = new Label("Sekslelud".toUpperCase());
+        Label teema5 = new Label("Autod".toUpperCase());
+
+        List<Label> teemad = Arrays.asList(teema1, teema2, teema3, teema4, teema5);
+        teemad.forEach(teema -> teema.setFont(Font.font("Verdana", FontWeight.BOLD, 20)));
+
+        // lisame teemade sildid mängulauale
+        lisaRitta(teemad, mänguRuudustik, 0);
+        teemad.forEach(teema -> teema.setAlignment(Pos.CENTER));
+
+
+        // 1. teema küsimused
+        Button küsimus100_1 = new Button("100"); //Sport
+        Button küsimus200_1 = new Button("200");
+        Button küsimus300_1 = new Button("300");
+        Button küsimus400_1 = new Button("400");
+        Button küsimus500_1 = new Button("500");
+
+        // lisame 1. teema küsimused mängulauale
+        List<Button> esimeseTeemaNupud = Arrays.asList(küsimus100_1, küsimus200_1, küsimus300_1, küsimus400_1, küsimus500_1);
+        lisaVeergu(esimeseTeemaNupud, mänguRuudustik, 1);
+
+        // 2. teema küsimused
+        Button küsimus100_2 = new Button("100");
+        Button küsimus200_2 = new Button("200");
+        Button küsimus300_2 = new Button("300");
+        Button küsimus400_2 = new Button("400");
+        Button küsimus500_2 = new Button("500");
+
+        // lisame 2. teema küsimused mängulauale
+        List<Button> teiseTeemaNupud = Arrays.asList(küsimus100_2, küsimus200_2,küsimus300_2,küsimus400_2,küsimus500_2);
+        lisaVeergu(teiseTeemaNupud, mänguRuudustik, 2);
+
+
+        // 3. teema küsimused
+        Button küsimus100_3 = new Button("100");
+        Button küsimus200_3 = new Button("200");
+        Button küsimus300_3 = new Button("300");
+        Button küsimus400_3 = new Button("400");
+        Button küsimus500_3 = new Button("500");
+
+        // lisame 3. teema küsimused mängulauale
+        List<Button> kolmandaTeemaNupud = Arrays.asList(küsimus100_3,küsimus200_3,küsimus300_3,küsimus400_3,küsimus500_3);
+        lisaVeergu(kolmandaTeemaNupud, mänguRuudustik, 3);
+
+        // 4. teema küsimused
+        Button küsimus100_4 = new Button("100");
+        Button küsimus200_4 = new Button("200");
+        Button küsimus300_4 = new Button("300");
+        Button küsimus400_4 = new Button("400");
+        Button küsimus500_4 = new Button("500");
+
+        // lisame 4. teema küsimused mängulauale
+        List<Button> neljandaTeemaNupud = Arrays.asList(küsimus100_4,küsimus200_4,küsimus300_4,küsimus400_4,küsimus500_4);
+        lisaVeergu(neljandaTeemaNupud, mänguRuudustik, 4);
+
+        // 5. teema küsimused
+        Button küsimus100_5 = new Button("100");
+        Button küsimus200_5 = new Button("200");
+        Button küsimus300_5 = new Button("300");
+        Button küsimus400_5 = new Button("400");
+        Button küsimus500_5 = new Button("500");
+
+        // lisame 5. teema küsimused mängulauale
+        List<Button> viiendaTeemaNupud = Arrays.asList(küsimus100_5,küsimus200_5,küsimus300_5,küsimus400_5,küsimus500_5);
+        lisaVeergu(viiendaTeemaNupud, mänguRuudustik, 5);
+
+
+        // Sündmuste lisamine küsimuste peale vajutades
+        //Kuidagi peab ikka vist parem moodus olema, kuidas seda teha
+        // Teema: sport
+        lisaSündmusedNuppudele(esimeseTeemaNupud,"Sport");
+
+        return mänguRuudustik;
 
     }
 
-
-    public static void lisaRitta(List<Label> sildid, GridPane valikuteRuudustik, int reaNr) {
+    /**
+     * Lisab etteantud sildid mänguruudustikku antud numbriga ritta.
+     */
+    public static void lisaRitta(List<Label> sildid, GridPane mänguRuudustik, int reaNr) {
         for (int i = 0; i < sildid.size(); i++) {
             Label silt = sildid.get(i);
-            valikuteRuudustik.add(silt, i, reaNr);
+            mänguRuudustik.add(silt, i, reaNr);
             silt.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
         }
     }
 
-
-    public static void lisaVeergu(List<Button> nupud, GridPane valikuteRuudustik, int veeruNr) {
+    /**
+     * Lisab etteantud nupud mänguruudustikku antud numbriga veergu.
+     */
+    public static void lisaVeergu(List<Button> nupud, GridPane mänguRuudustik, int veeruNr) {
         for (int i = 0; i < nupud.size(); i++) {
             Button nupp = nupud.get(i);
-            valikuteRuudustik.add(nupp, veeruNr-1, i+1);
+            mänguRuudustik.add(nupp, veeruNr-1, i+1);
             nupp.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
         }
     }
 
-    public void lisaSündmusedNuppudele(List<Button> nupud, String teema, List<Küsimus> küsimused){
-        for (int i = 0; i < nupud.size(); i++) {
-            nupuvajutus(nupud.get(i),teema, 100*(i+1), küsimused);
-        }
-    }
 
+    /**
+     * Kui antud lava üritatakse sulgeda, siis küsitakse uues aknas kinnitust sulgemise kohta.
+     */
     public void aknaSulgemiseKinnitus(Stage lava, String sõnum){
         lava.setOnCloseRequest(event -> {
             // luuakse teine lava
@@ -268,10 +274,14 @@ public class Mdea extends Application {
             kusimus.setAlwaysOnTop(true);
         }); //siin lõpeb aknasündmuse kirjeldus
 
-    }// Start
+    }
 
 
-
+    /**
+     * Loeb küsimuste failist sisse seal olevad küsimused, lisab need listi ning tagastab listi.
+     * Küsimuste failis on küsimused kujul(vv=vastusevariant):
+     * "teema;küsimus;vv1;vv2;vv3;vv4;õige vastuse nr;õige vastuse eest saadavad punktid"
+     */
     public static List<Küsimus> loeKüsimused() {
         List<Küsimus> küsimute_list = new ArrayList<>();
 
@@ -288,11 +298,14 @@ public class Mdea extends Application {
 
                 String[] tükid = rida.split(";");
 
-                if (tükid.length == 8) { // igaksjuhuks, äkki küsimus on valesti koostatud, siis jätab vahele, mitte ei jookse kokku
-                    Küsimus uus_küsimus = new Küsimus(tükid[0], tükid[1], tükid[2], tükid[3], tükid[4], tükid[5], Integer.parseInt(tükid[6]), Integer.parseInt(tükid[7]));
+                // igaksjuhuks kontroll, kas küsimus on õigesti koostatud
+                if (tükid.length == 8) {
+                    Küsimus uus_küsimus = new Küsimus(tükid[0], tükid[1], tükid[2], tükid[3], tükid[4], tükid[5],
+                                                    Integer.parseInt(tükid[6]), Integer.parseInt(tükid[7]));
                     küsimute_list.add(uus_küsimus);
                 }
-                if (tükid.length != 8) {
+                // kui valesti koostatud, siis jätab küsimuse vahele, mitte ei jookse kokku
+                else if (tükid.length != 8) {
                     System.out.println(rida + " - OLI VALESTI KOOSTATUD");
                 }
             }
@@ -304,16 +317,34 @@ public class Mdea extends Application {
         return küsimute_list;
     }
 
-    public void nupuvajutus(Button nimi, String teema, int väärtus, List<Küsimus> küsimused) {
-        nimi.setOnMouseClicked(event -> {
-            Küsimus uus = loosi_suvaline_küsimus(teema, väärtus, küsimused);
+
+    /**
+     * Lisab antud nuppudele sündmused, mis käivituvad, kui nuppe vajutada.
+     */
+    public void lisaSündmusedNuppudele(List<Button> nupud, String teema){
+        for (int i = 0; i < nupud.size(); i++) {
+            nupuvajutus(nupud.get(i),teema, 100*(i+1));
+        }
+    }
+
+
+    /**
+     * Lisab antud nupule sündmuse, mis käivitub, kui seda vajutada.
+     */
+    public void nupuvajutus(Button nupp, String teema, int väärtus) {
+        nupp.setOnMouseClicked(event -> {
+            Küsimus uus = loosi_suvaline_küsimus(teema, väärtus);
             küsimuseAken(uus);
             // kui küsimus on ühe korra avatud, siis seda uuesti valida ei saa
-            nimi.setDisable(true);
+            nupp.setDisable(true);
         });
     }
 
-    public Küsimus loosi_suvaline_küsimus(String teema, int väärtus, List<Küsimus> küsimused) {
+
+    /**
+     * Valib failist loetud küsimuste hulgast suvalise küsimuse ja tagastab selle.
+     */
+    public Küsimus loosi_suvaline_küsimus(String teema, int väärtus) {
 
         Küsimus loositav_küsimus;
 
@@ -335,14 +366,19 @@ public class Mdea extends Application {
 
         }
     }
+
+
+    /**
+     * Loob antud küsimuse kohta küsimuse akna, kus on 4 valikvastust.
+     */
     public void küsimuseAken(Küsimus uus_küsimus) {
 
         //Mängija uus_mängija = mängija; //mdea lisan punkte mängijale
-        Stage newStage = new Stage();
+        Stage küsimuseAken = new Stage();
         Group juur = new Group();
 
         VBox vbox = new VBox(20);
-        vbox.setPadding(new Insets(20));
+        vbox.setPadding(new Insets(30));
 
         Text tekst = new Text(uus_küsimus.getKüsimus());
         tekst.setFont(new Font(15));
@@ -356,38 +392,43 @@ public class Mdea extends Application {
         CheckBox valik4 = new CheckBox(uus_küsimus.getVastus4());
         valik1.setFont(new Font(13));
 
-        Button nupp = new Button();
-        nupp.setPrefSize(50, 30);
-        nupp.setText("Vasta");
+
+        Button vastaNupp = new Button();
+        vastaNupp.setPrefSize(50, 30);
+        vastaNupp.setText("Vasta");
 
 
         Text tekst2 = new Text();
 
         // kui üritatakse akent kinni panna enne vastamist
-        aknaSulgemiseKinnitus(newStage, "Olete kindel, et ei soovi küsimusele vastata?");
+        aknaSulgemiseKinnitus(küsimuseAken, "Olete kindel, et ei soovi küsimusele vastata?");
 
         // vastamisel antakse tagasisidet
-        nupp.setOnMouseClicked(event -> tagasiside(nupp,valik1,valik2,valik3,valik4,vbox,tekst2, uus_küsimus, newStage));
+        vastaNupp.setOnMouseClicked(event -> tagasiside(vastaNupp,valik1,valik2,valik3,valik4,vbox,tekst2, uus_küsimus, küsimuseAken));
 
 
-        vbox.getChildren().addAll(tekst,valik1, valik2, valik3,valik4, nupp, tekst2);
+        vbox.getChildren().addAll(tekst,valik1, valik2, valik3,valik4, vastaNupp, tekst2);
         juur.getChildren().add(vbox);
 
 
         Scene stageScene = new Scene(juur, 550, 350);
-        newStage.setScene(stageScene);
-        newStage.setTitle("Küsimus");
-        newStage.setResizable(false);
-        newStage.show();
-        newStage.setAlwaysOnTop(true);
-        newStage.setIconified(true);
-        newStage.setIconified(false);
+        küsimuseAken.setScene(stageScene);
+        küsimuseAken.setTitle("Küsimus");
+        küsimuseAken.setResizable(false);
+        küsimuseAken.show();
+        küsimuseAken.setAlwaysOnTop(true);
+        küsimuseAken.setIconified(true);
+        küsimuseAken.setIconified(false);
 
     }
 
     //Siin klassis veits palju kordusi
+
+    /**
+     * Annab antud küsimuse aknas olevale küsimusele vastates samas aknas tagasisidet.
+     */
     public void tagasiside(Button nupp,CheckBox valik1, CheckBox valik2, CheckBox valik3,
-                                  CheckBox valik4, VBox vbox, Text tekst, Küsimus küsimus, Stage lava){
+                                  CheckBox valik4, VBox vbox, Text tekst, Küsimus küsimus, Stage küsimuseAken){
         if(valik1.isSelected() && küsimus.getÕige_vastuse_nr() == 0 && !valik2.isSelected()
                 && !valik3.isSelected() && !valik4.isSelected()){
             tekst.setText("Sinu vastus on õige. Said juurde: " + küsimus.getVäärtus() + " punkti");
@@ -436,7 +477,7 @@ public class Mdea extends Application {
         nupp.setDisable(true);
 
         // kui on küsimusele vastatud, siis küsimuse akent sulgedes ei küsita kinnitust sulgemise kohta
-        lava.setOnCloseRequest(event -> lava.hide());
+        küsimuseAken.setOnCloseRequest(event -> küsimuseAken.hide());
     }
 
 
