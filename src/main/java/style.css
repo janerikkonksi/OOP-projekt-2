@@ -17,11 +17,12 @@
     -fx-effect: dropshadow(one-pass-box , blue , 5 , 0.0 , 1 , 0 );
  }
  .button:hover{
+    -fx-background-color: linear-gradient(#1650ff, #04255b);
     -fx-text-fill: "Yellow";
     -fx-cursor: hand;
  }
 
  .text-area{
-     -fx-background-color: white;
+     -fx-background-color: black;
      -fx-background-radius: 0;
   }

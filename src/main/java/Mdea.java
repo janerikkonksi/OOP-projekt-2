@@ -1,18 +1,16 @@
 import javafx.application.Application;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
+import javax.swing.*;
 import java.io.*;
 import java.net.URL;
 import java.util.ArrayList;
@@ -23,6 +21,8 @@ import java.util.Optional;
 @SuppressWarnings("Duplicates")
 public class Mdea extends Application {
 
+    public Stage peaLava;
+
 
     public static void main(String[] args) {
         launch(args);
@@ -32,14 +32,17 @@ public class Mdea extends Application {
     @Override
     public void start(Stage peaLava) throws Exception {
 
+        this.peaLava = peaLava;
+
         //Selle võib teha eraldi meetodiks
-        TextInputDialog dialog = new TextInputDialog("Mari Mustikas");
-        dialog.setTitle("Nime küsimine");
+        TextInputDialog dialog = new TextInputDialog();
+        dialog.setTitle("");
         dialog.setHeaderText("Kuldvillak");
         dialog.setContentText("Palun sisesta oma nimi: ");
 
         String nimi = "";
         Optional<String> result = dialog.showAndWait();
+
         if (result.isPresent()){
             nimi = result.get();
         }
@@ -49,6 +52,7 @@ public class Mdea extends Application {
 
         //Loon sisendi põhjal uue mängija
         Mängija uus_mängija = new Mängija(nimi);
+
 
         BorderPane juur = new BorderPane();
         juur.setPadding(new Insets(5));
@@ -65,39 +69,8 @@ public class Mdea extends Application {
 
 
         // mänguruudustiku loomine
-        GridPane valikuteRuudustik = new GridPane();
-        valikuteRuudustik.setHgap(5);
-        valikuteRuudustik.setVgap(5);
+        GridPane valikuteRuudustik = mänguruudustikuLoomine();
         juur.setCenter(valikuteRuudustik);
-
-
-        // kõik veerud on sama laiusega
-        ColumnConstraints veerg1 = new ColumnConstraints();
-        veerg1.setPercentWidth(20);
-        ColumnConstraints veerg2 = new ColumnConstraints();
-        veerg2.setPercentWidth(20);
-        ColumnConstraints veerg3 = new ColumnConstraints();
-        veerg3.setPercentWidth(20);
-        ColumnConstraints veerg4 = new ColumnConstraints();
-        veerg4.setPercentWidth(20);
-        ColumnConstraints veerg5 = new ColumnConstraints();
-        veerg5.setPercentWidth(20);
-        valikuteRuudustik.getColumnConstraints().addAll(veerg1, veerg2, veerg3, veerg4, veerg5);
-
-        // kõik read on sama k�rgusega
-        RowConstraints rida0 = new RowConstraints();
-        rida0.setPercentHeight(20);
-        RowConstraints rida1 = new RowConstraints();
-        rida1.setPercentHeight(20);
-        RowConstraints rida2 = new RowConstraints();
-        rida2.setPercentHeight(20);
-        RowConstraints rida3 = new RowConstraints();
-        rida3.setPercentHeight(20);
-        RowConstraints rida4 = new RowConstraints();
-        rida4.setPercentHeight(20);
-        RowConstraints rida5 = new RowConstraints();
-        rida5.setPercentHeight(20);
-        valikuteRuudustik.getRowConstraints().addAll(rida0, rida1, rida2, rida3, rida4, rida5);
 
 
         // teemade sildid
@@ -180,7 +153,6 @@ public class Mdea extends Application {
         // Sündmuste lisamine küsimuste peale vajutades
         //Kuidagi peab ikka vist parem moodus olema, kuidas seda teha
         // Teema: sport
-
         lisaSündmusedNuppudele(esimeseTeemaNupud,"Sport", küsimused);
 
 
@@ -189,7 +161,49 @@ public class Mdea extends Application {
 
         peaLava.show();
 
-        peaLava.show();
+    }//start
+
+
+
+
+    //// MEETODID ////
+
+    public static GridPane mänguruudustikuLoomine(){
+
+        GridPane valikuteRuudustik = new GridPane();
+        valikuteRuudustik.setHgap(5);
+        valikuteRuudustik.setVgap(5);
+
+        // kõik veerud on sama laiusega
+        ColumnConstraints veerg1 = new ColumnConstraints();
+        veerg1.setPercentWidth(20);
+        ColumnConstraints veerg2 = new ColumnConstraints();
+        veerg2.setPercentWidth(20);
+        ColumnConstraints veerg3 = new ColumnConstraints();
+        veerg3.setPercentWidth(20);
+        ColumnConstraints veerg4 = new ColumnConstraints();
+        veerg4.setPercentWidth(20);
+        ColumnConstraints veerg5 = new ColumnConstraints();
+        veerg5.setPercentWidth(20);
+        valikuteRuudustik.getColumnConstraints().addAll(veerg1, veerg2, veerg3, veerg4, veerg5);
+
+        // kõik read on sama k�rgusega
+        RowConstraints rida0 = new RowConstraints();
+        rida0.setPercentHeight(20);
+        RowConstraints rida1 = new RowConstraints();
+        rida1.setPercentHeight(20);
+        RowConstraints rida2 = new RowConstraints();
+        rida2.setPercentHeight(20);
+        RowConstraints rida3 = new RowConstraints();
+        rida3.setPercentHeight(20);
+        RowConstraints rida4 = new RowConstraints();
+        rida4.setPercentHeight(20);
+        RowConstraints rida5 = new RowConstraints();
+        rida5.setPercentHeight(20);
+        valikuteRuudustik.getRowConstraints().addAll(rida0, rida1, rida2, rida3, rida4, rida5);
+
+        return valikuteRuudustik;
+
     }
 
 
@@ -216,7 +230,7 @@ public class Mdea extends Application {
         }
     }
 
-    public static void aknaSulgemiseKinnitus(Stage lava, String sõnum){
+    public void aknaSulgemiseKinnitus(Stage lava, String sõnum){
         lava.setOnCloseRequest(event -> {
             // luuakse teine lava
             Stage kusimus = new Stage();
@@ -226,7 +240,9 @@ public class Mdea extends Application {
             Button cancelButton = new Button("Ei");
 
             // sündmuse lisamine nupule Jah
-            okButton.setOnAction(event1 -> kusimus.hide());
+            okButton.setOnAction(event1 -> {
+                kusimus.hide();
+            });
 
             // sündmuse lisamine nupule Ei
             cancelButton.setOnAction(event12 -> {
@@ -249,8 +265,10 @@ public class Mdea extends Application {
             kusimus.setScene(stseen2);
             kusimus.setResizable(false);
             kusimus.show();
+            kusimus.setAlwaysOnTop(true);
         }); //siin lõpeb aknasündmuse kirjeldus
-    }
+
+    }// Start
 
 
 
@@ -290,6 +308,7 @@ public class Mdea extends Application {
         nimi.setOnMouseClicked(event -> {
             Küsimus uus = loosi_suvaline_küsimus(teema, väärtus, küsimused);
             küsimuseAken(uus);
+            // kui küsimus on ühe korra avatud, siis seda uuesti valida ei saa
             nimi.setDisable(true);
         });
     }
@@ -309,13 +328,14 @@ public class Mdea extends Application {
 
             loositav_küsimus = küsimused.get(rand);
 
+            // kontrollib kas suvaliselt valitud küsimus on sobiv ja kui on siis tagastab selle
             if (teema.equals(loositav_küsimus.getTeema()) && loositav_küsimus.getVäärtus() == väärtus) {
                 return loositav_küsimus;
             }
 
         }
     }
-    public static void küsimuseAken(Küsimus uus_küsimus) {
+    public void küsimuseAken(Küsimus uus_küsimus) {
 
         //Mängija uus_mängija = mängija; //mdea lisan punkte mängijale
         Stage newStage = new Stage();
@@ -359,11 +379,14 @@ public class Mdea extends Application {
         newStage.setTitle("Küsimus");
         newStage.setResizable(false);
         newStage.show();
+        newStage.setAlwaysOnTop(true);
+        newStage.setIconified(true);
+        newStage.setIconified(false);
 
     }
 
     //Siin klassis veits palju kordusi
-    public static void tagasiside(Button nupp,CheckBox valik1, CheckBox valik2, CheckBox valik3,
+    public void tagasiside(Button nupp,CheckBox valik1, CheckBox valik2, CheckBox valik3,
                                   CheckBox valik4, VBox vbox, Text tekst, Küsimus küsimus, Stage lava){
         if(valik1.isSelected() && küsimus.getÕige_vastuse_nr() == 0 && !valik2.isSelected()
                 && !valik3.isSelected() && !valik4.isSelected()){
@@ -412,9 +435,8 @@ public class Mdea extends Application {
         valik4.setDisable(true);
         nupp.setDisable(true);
 
-        // kui on küsimusele vastatud, siis küsimuse akent sulgedes ei küsita kinnitust suglemise kohta
+        // kui on küsimusele vastatud, siis küsimuse akent sulgedes ei küsita kinnitust sulgemise kohta
         lava.setOnCloseRequest(event -> lava.hide());
-
     }
 
 
