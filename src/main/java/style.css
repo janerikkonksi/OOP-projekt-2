@@ -1,6 +1,7 @@
 .root{
-     -fx-background-color: #05037a;
-     -fx-font-size: 11pt;
+    -fx-background-color: #05037a;
+    -fx-font-size: 11pt;
+    -fx-border-width: 0;
 }
 
 .label{

@@ -4,12 +4,14 @@ import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -21,7 +23,17 @@ public class Kuldvillak extends Application {
 
     // Loeme küsimused failist sisse
     List<Küsimus> küsimused = loeKüsimused();
-    public Stage peaLava;
+    // pealava on isendiväljana, sest nii on lihtsam sellele ligi pääseda kui vaja
+    Stage peaLava;
+    // vastamiste arv näitab seda, mitu mängijat on hetkel avatud küsimusele vastanud
+    int vastamisteArv=1;
+    // mitu mängijat mängib antud mängus, seda küsitakse programmi avamisel
+    int mängijateArv=1;
+
+    // Mängijaid saab maksimaalselt olla 3
+    Mängija mängija1=null;
+    Mängija mängija2=null;
+    Mängija mängija3=null;
 
 
     public static void main(String[] args) {
@@ -33,31 +45,18 @@ public class Kuldvillak extends Application {
     public void start(Stage peaLava) throws Exception {
 
         this.peaLava = peaLava;
+        peaLava.setTitle("Kuldvillak");
+        // ikooni lisamine
+        peaLava.getIcons().add(new Image("https://images-na.ssl-images-amazon.com/images/I/31M2GpmH5VL.png"));
 
-        //Selle võib teha eraldi meetodiks
-        TextInputDialog dialog = new TextInputDialog();
-        dialog.setTitle("");
-        dialog.setHeaderText("Kuldvillak");
-        dialog.setContentText("Palun sisesta oma nimi: ");
+        // mängijate arvu küsimine ja mängijate lisamine
+        mängijateLisamine();
 
-        String nimi = "";
-        Optional<String> result = dialog.showAndWait();
-
-        if (result.isPresent()){
-            nimi = result.get();
-        }
-        else {
-            System.exit(0);
-        }
-
-        //Loon sisendi põhjal uue mängija
-        Mängija uus_mängija = new Mängija(nimi);
-
-
+        // juure ja stseeni loomine
         BorderPane juur = new BorderPane();
         juur.setPadding(new Insets(5));
         Scene scene = new Scene(juur, 750, 500);
-        scene.getStylesheets().add("style.css");
+        scene.getStylesheets().add("style.css");  //css lisamine
         peaLava.setScene(scene);
 
         // mänguakna minimaalne suurus
@@ -67,11 +66,9 @@ public class Kuldvillak extends Application {
         peaLava.minWidthProperty().bind(scene.heightProperty().multiply(1.5));
         peaLava.minHeightProperty().bind(scene.widthProperty().divide(1.5));
 
-
         // MÄNGURUUDUSTIKU LOOMINE
         GridPane valikuteRuudustik = mänguruudustikuLoomine();
         juur.setCenter(valikuteRuudustik);
-
 
         // sündmuse lisamine, kui soovitakse mängu sulgeda
         aknaSulgemiseKinnitus(peaLava,"Kas soovite tõesti mängimise lõpetada?");
@@ -123,6 +120,52 @@ public class Kuldvillak extends Application {
         }
 
         return küsimute_list;
+    }
+
+    /**
+     * Küsib mängijate arvu, ning seejärel loob mängijad, küsides iga mängija nime.
+     */
+    public void mängijateLisamine(){
+        // mängijate arvu küsimine
+        ChoiceDialog arvuKüsimine = new ChoiceDialog();
+        arvuKüsimine.setTitle("");
+        arvuKüsimine.setHeaderText("Kuldvillak");
+        arvuKüsimine.setContentText("Vali mängijate arv: ");
+        arvuKüsimine.getItems().addAll(1,2,3);
+        Optional<Integer> mängijateArv = arvuKüsimine.showAndWait();
+
+        if (mängijateArv.isPresent()){
+            this.mängijateArv = mängijateArv.get();
+        }
+        else if(!mängijateArv.isPresent()){
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("");
+            alert.setHeaderText("Mängijate arv on valimata!");
+            alert.showAndWait();
+        }
+        else {
+            System.exit(0);
+        }
+
+
+        TextInputDialog dialog = new TextInputDialog();
+        dialog.setTitle("");
+        dialog.setHeaderText("Kuldvillak");
+        dialog.setContentText("Palun sisesta oma nimi: ");
+
+        String nimi = "";
+        Optional<String> result = dialog.showAndWait();
+
+        if (result.isPresent()){
+            nimi = result.get();
+        }
+        else {
+            System.exit(0);
+        }
+
+        //Loon sisendi põhjal uue mängija
+        Mängija uus_mängija = new Mängija(nimi);
+        this.mängija1=uus_mängija;
     }
 
 
@@ -291,8 +334,8 @@ public class Kuldvillak extends Application {
             vBox.getChildren().addAll(label, pane);
 
             //stseeni loomine ja näitamine
-            Scene stseen2 = new Scene(vBox, 300, 100);
-            kusimus.setScene(stseen2);
+            Scene stseen = new Scene(vBox, 300, 100);
+            kusimus.setScene(stseen);
             kusimus.setResizable(false);
             kusimus.show();
             kusimus.setAlwaysOnTop(true);
@@ -355,13 +398,12 @@ public class Kuldvillak extends Application {
      */
     public void küsimuseAken(Küsimus uus_küsimus) {
 
-        //Mängija uus_mängija = mängija; //mdea lisan punkte mängijale
         Stage küsimuseAken = new Stage();
         Group juur = new Group();
-
         VBox vbox = new VBox(20);
         vbox.setPadding(new Insets(30));
 
+        // küsimuse tekst
         Text tekst = new Text(uus_küsimus.getKüsimus());
         tekst.setFont(new Font(15));
 
@@ -380,28 +422,28 @@ public class Kuldvillak extends Application {
         vastaNupp.setPrefSize(50, 30);
         vastaNupp.setText("Vasta");
 
-
-        Text tekst2 = new Text();
-
-        // kui üritatakse akent kinni panna enne vastamist
-        aknaSulgemiseKinnitus(küsimuseAken, "Olete kindel, et ei soovi küsimusele vastata?");
-
         // vastamisel antakse tagasisidet
-        vastaNupp.setOnMouseClicked(event -> tagasiside(vastaNupp,valik1,valik2,valik3,valik4,vbox,tekst2, uus_küsimus, küsimuseAken));
+        Text tagasiside = new Text();
+        Text õigeVastus = new Text();
+        int vastamisteArv=1;
+        vastaNupp.setOnMouseClicked(event -> tagasiside(vastaNupp,valik1,valik2,valik3,valik4,tagasiside,
+                                                        õigeVastus,uus_küsimus,küsimuseAken));
 
-
-        vbox.getChildren().addAll(tekst,valik1, valik2, valik3,valik4, vastaNupp, tekst2);
+        // lisame küsimuse komponendid juurele
+        vbox.getChildren().addAll(tekst,valik1, valik2, valik3,valik4, vastaNupp, tagasiside,õigeVastus);
         juur.getChildren().add(vbox);
 
-
+        // stseeni loomine
         Scene stageScene = new Scene(juur, 550, 350);
         küsimuseAken.setScene(stageScene);
         küsimuseAken.setTitle("Küsimus");
         küsimuseAken.setResizable(false);
         küsimuseAken.show();
         küsimuseAken.setAlwaysOnTop(true);
-        küsimuseAken.setIconified(true);
-        küsimuseAken.setIconified(false);
+
+        // kui üritatakse akent kinni panna enne vastamist, küsib kinnitust
+        aknaSulgemiseKinnitus(küsimuseAken, "Olete kindel, et ei soovi küsimusele vastata?");
+
 
     }
 
@@ -410,57 +452,76 @@ public class Kuldvillak extends Application {
     /**
      * Annab antud küsimuse aknas olevale küsimusele vastates samas aknas tagasisidet.
      */
-    public void tagasiside(Button nupp,CheckBox valik1, CheckBox valik2, CheckBox valik3,
-                                  CheckBox valik4, VBox vbox, Text tekst, Küsimus küsimus, Stage küsimuseAken){
-        if(valik1.isSelected() && küsimus.getÕige_vastuse_nr() == 0 && !valik2.isSelected()
-                && !valik3.isSelected() && !valik4.isSelected()){
-            tekst.setText("Sinu vastus on õige.\nSaid juurde: " + küsimus.getVäärtus() + " punkti");
-            tekst.setFill(Color.GREEN);
+    public void tagasiside(Button nupp,CheckBox valik1, CheckBox valik2, CheckBox valik3,CheckBox valik4,
+                      Text tagasiside, Text õigeVastus, Küsimus küsimus, Stage küsimuseAken){
+
+        if (valik1.isSelected() && küsimus.getÕige_vastuse_nr() == 0 && !valik2.isSelected()
+                && !valik3.isSelected() && !valik4.isSelected()) {
+            tagasiside.setText("Sinu vastus on õige." + System.lineSeparator() + "Said juurde: " + küsimus.getVäärtus() + " punkti");
+            tagasiside.setFill(Color.GREEN);
             valik1.setTextFill(Color.GREEN);
             valik2.setTextFill(Color.RED);
             valik3.setTextFill(Color.RED);
             valik4.setTextFill(Color.RED);
-        } else if(valik2.isSelected() && küsimus.getÕige_vastuse_nr() == 1 && !valik1.isSelected()
+        } else if (valik2.isSelected() && küsimus.getÕige_vastuse_nr() == 1 && !valik1.isSelected()
                 && !valik3.isSelected() && !valik4.isSelected()) {
-            tekst.setText("Sinu vastus on õige.\nSaid juurde: " + küsimus.getVäärtus() + " punkti");
-            tekst.setFill(Color.GREEN);
+            tagasiside.setText("Sinu vastus on õige." + System.lineSeparator() + "Said juurde: " + küsimus.getVäärtus() + " punkti");
+            tagasiside.setFill(Color.GREEN);
             valik2.setTextFill(Color.GREEN);
             valik1.setTextFill(Color.RED);
             valik3.setTextFill(Color.RED);
             valik4.setTextFill(Color.RED);
-        } else if(valik3.isSelected() && küsimus.getÕige_vastuse_nr() == 2 && !valik1.isSelected()
+        } else if (valik3.isSelected() && küsimus.getÕige_vastuse_nr() == 2 && !valik1.isSelected()
                 && !valik2.isSelected() && !valik4.isSelected()) {
-            tekst.setText("Sinu vastus on õige.\nSaid juurde: " + küsimus.getVäärtus() + " punkti");
-            tekst.setFill(Color.GREEN);
+            tagasiside.setText("Sinu vastus on õige." + System.lineSeparator() + "Said juurde: " + küsimus.getVäärtus() + " punkti");
+            tagasiside.setFill(Color.GREEN);
             valik3.setTextFill(Color.GREEN);
             valik2.setTextFill(Color.RED);
             valik1.setTextFill(Color.RED);
             valik4.setTextFill(Color.RED);
-        } else if(valik4.isSelected() && küsimus.getÕige_vastuse_nr() == 3 && !valik1.isSelected()
+        } else if (valik4.isSelected() && küsimus.getÕige_vastuse_nr() == 3 && !valik1.isSelected()
                 && !valik2.isSelected() && !valik3.isSelected()) {
-            tekst.setText("Sinu vastus on õige.\nSaid juurde: " + küsimus.getVäärtus() + " punkti");
-            tekst.setFill(Color.GREEN);
+            tagasiside.setText("Sinu vastus on õige." + System.lineSeparator() + "Said juurde: " + küsimus.getVäärtus() + " punkti");
+            tagasiside.setFill(Color.GREEN);
             valik4.setTextFill(Color.GREEN);
             valik1.setTextFill(Color.RED);
             valik3.setTextFill(Color.RED);
             valik2.setTextFill(Color.RED);
-        }
-        else{
-            tekst.setText("Sinu vastus on vale.");
-            tekst.setFill(Color.RED);
-            Text õigeVastus = new Text("Õige vastus:" + System.lineSeparator() + "\t" + küsimus.getÕigeVastus());
-            vbox.getChildren().add(õigeVastus);
+        } else {
+            tagasiside.setText("Sinu vastus on vale.");
+            tagasiside.setFill(Color.RED);
         }
 
-        // pärast vastamist ei saa enam uuesti vastusevariante valida ega vasta nupule vajutada
-        valik1.setDisable(true);
-        valik2.setDisable(true);
-        valik3.setDisable(true);
-        valik4.setDisable(true);
-        nupp.setDisable(true);
+        // pärast õigesti vastamist ei saa enam uuesti vastusevariante valida ega vasta nupule vajutada
+        if(tagasiside.getText().contains("õige")) {
+            valik1.setDisable(true);
+            valik2.setDisable(true);
+            valik3.setDisable(true);
+            valik4.setDisable(true);
+            nupp.setDisable(true);
+            vastamisteArv=1;
 
-        // kui on küsimusele vastatud, siis küsimuse akent sulgedes ei küsita kinnitust sulgemise kohta
-        küsimuseAken.setOnCloseRequest(event -> küsimuseAken.hide());
+            // kui on küsimusele vastatud, siis küsimuse akent sulgedes ei küsita kinnitust sulgemise kohta
+            küsimuseAken.setOnCloseRequest(event -> küsimuseAken.hide());
+        }
+        // kui kõik mängijad vastavad valesti, näitab õiget vastust
+        // ning ei saa enam uuesti vastusevariante valida ega vasta nupule vajutada
+        else if(vastamisteArv==mängijateArv && tagasiside.getText().contains("vale")){
+            õigeVastus.setText("Õige vastus:" + System.lineSeparator() + "\t" + küsimus.getÕigeVastus());
+            valik1.setDisable(true);
+            valik2.setDisable(true);
+            valik3.setDisable(true);
+            valik4.setDisable(true);
+            nupp.setDisable(true);
+            vastamisteArv=1;
+
+            // kui on küsimusele vastatud, siis küsimuse akent sulgedes ei küsita kinnitust sulgemise kohta
+            küsimuseAken.setOnCloseRequest(event -> küsimuseAken.hide());
+        }
+        // kui pole õigesti vastatud ja kõk mängijad pole veel vastanud
+        else {
+            vastamisteArv += 1;
+        }
     }
 
 
