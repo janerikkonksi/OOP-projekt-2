@@ -136,34 +136,19 @@ public class Kuldvillak extends Application {
         mänguRuudustik.setHgap(5);
         mänguRuudustik.setVgap(5);
 
-        // kõik veerud on sama laiusega
-        ColumnConstraints veerg1 = new ColumnConstraints();
-        veerg1.setPercentWidth(20);
-        ColumnConstraints veerg2 = new ColumnConstraints();
-        veerg2.setPercentWidth(20);
-        ColumnConstraints veerg3 = new ColumnConstraints();
-        veerg3.setPercentWidth(20);
-        ColumnConstraints veerg4 = new ColumnConstraints();
-        veerg4.setPercentWidth(20);
-        ColumnConstraints veerg5 = new ColumnConstraints();
-        veerg5.setPercentWidth(20);
-        mänguRuudustik.getColumnConstraints().addAll(veerg1, veerg2, veerg3, veerg4, veerg5);
+        // kõik 5 veerud on sama laiusega
+        for (int i = 0; i < 5; i++) {
+            ColumnConstraints veerg = new ColumnConstraints();
+            veerg.setPercentWidth(20);
+            mänguRuudustik.getColumnConstraints().add(veerg);
+        }
 
-        // kõik read on sama kõrgusega
-        RowConstraints rida0 = new RowConstraints();
-        rida0.setPercentHeight(20);
-        RowConstraints rida1 = new RowConstraints();
-        rida1.setPercentHeight(20);
-        RowConstraints rida2 = new RowConstraints();
-        rida2.setPercentHeight(20);
-        RowConstraints rida3 = new RowConstraints();
-        rida3.setPercentHeight(20);
-        RowConstraints rida4 = new RowConstraints();
-        rida4.setPercentHeight(20);
-        RowConstraints rida5 = new RowConstraints();
-        rida5.setPercentHeight(20);
-        mänguRuudustik.getRowConstraints().addAll(rida0, rida1, rida2, rida3, rida4, rida5);
-
+        // kõik 6 rida on sama kõrgusega
+        for (int i = 0; i < 6; i++) {
+            RowConstraints rida = new RowConstraints();
+            rida.setPercentHeight(20);
+            mänguRuudustik.getRowConstraints().add(rida);
+        }
 
         // teemade sildid
         Label teema1 = new Label("Sport".toUpperCase());
@@ -180,70 +165,71 @@ public class Kuldvillak extends Application {
         teemad.forEach(teema -> teema.setAlignment(Pos.CENTER));
 
 
-        // 1. teema küsimused
-        Button küsimus100_1 = new Button("100"); //Sport
+        // loome 1. teema küsimuste jaoks nupud ning lisame mängulauale
+        Button küsimus100_1 = new Button("100");
         Button küsimus200_1 = new Button("200");
         Button küsimus300_1 = new Button("300");
         Button küsimus400_1 = new Button("400");
         Button küsimus500_1 = new Button("500");
-
-        // lisame 1. teema küsimused mängulauale
         List<Button> esimeseTeemaNupud = Arrays.asList(küsimus100_1, küsimus200_1, küsimus300_1, küsimus400_1, küsimus500_1);
         lisaVeergu(esimeseTeemaNupud, mänguRuudustik, 1);
 
-        // 2. teema küsimused
+
+        // loome 2. teema küsimuste jaoks nupud ning lisame mängulauale
         Button küsimus100_2 = new Button("100");
         Button küsimus200_2 = new Button("200");
         Button küsimus300_2 = new Button("300");
         Button küsimus400_2 = new Button("400");
         Button küsimus500_2 = new Button("500");
-
-        // lisame 2. teema küsimused mängulauale
         List<Button> teiseTeemaNupud = Arrays.asList(küsimus100_2, küsimus200_2,küsimus300_2,küsimus400_2,küsimus500_2);
         lisaVeergu(teiseTeemaNupud, mänguRuudustik, 2);
 
 
-        // 3. teema küsimused
+        // loome 3. teema küsimuste jaoks nupud ning lisame mängulauale
         Button küsimus100_3 = new Button("100");
         Button küsimus200_3 = new Button("200");
         Button küsimus300_3 = new Button("300");
         Button küsimus400_3 = new Button("400");
         Button küsimus500_3 = new Button("500");
-
-        // lisame 3. teema küsimused mängulauale
         List<Button> kolmandaTeemaNupud = Arrays.asList(küsimus100_3,küsimus200_3,küsimus300_3,küsimus400_3,küsimus500_3);
         lisaVeergu(kolmandaTeemaNupud, mänguRuudustik, 3);
 
-        // 4. teema küsimused
+        // loome 4. teema küsimuste jaoks nupud ning lisame mängulauale
         Button küsimus100_4 = new Button("100");
         Button küsimus200_4 = new Button("200");
         Button küsimus300_4 = new Button("300");
         Button küsimus400_4 = new Button("400");
         Button küsimus500_4 = new Button("500");
-
-        // lisame 4. teema küsimused mängulauale
         List<Button> neljandaTeemaNupud = Arrays.asList(küsimus100_4,küsimus200_4,küsimus300_4,küsimus400_4,küsimus500_4);
         lisaVeergu(neljandaTeemaNupud, mänguRuudustik, 4);
 
-        // 5. teema küsimused
+        // loome 5. teema küsimuste jaoks nupud ning lisame mängulauale
         Button küsimus100_5 = new Button("100");
         Button küsimus200_5 = new Button("200");
         Button küsimus300_5 = new Button("300");
         Button küsimus400_5 = new Button("400");
         Button küsimus500_5 = new Button("500");
-
-        // lisame 5. teema küsimused mängulauale
         List<Button> viiendaTeemaNupud = Arrays.asList(küsimus100_5,küsimus200_5,küsimus300_5,küsimus400_5,küsimus500_5);
         lisaVeergu(viiendaTeemaNupud, mänguRuudustik, 5);
 
-
-        // Sündmuste lisamine küsimuste peale vajutades
-        //Kuidagi peab ikka vist parem moodus olema, kuidas seda teha
-        // Teema: sport
+        // Sündmuste lisamine küsimuste nuppudele:
+        // Teema: SPORT
         lisaSündmusedNuppudele(esimeseTeemaNupud,"Sport");
 
-        return mänguRuudustik;
+        // Teema: AJALUGU
+        //lisaSündmusedNuppudele(teiseTeemaNupud,"Ajalugu");
 
+        // Teema: VARIA
+        //lisaSündmusedNuppudele(teiseTeemaNupud,"Varia");
+
+        // Teema: SEKSLELUD aga mis tglt xd
+        //lisaSündmusedNuppudele(teiseTeemaNupud,"Sekslelud");
+
+        // Teema: AUTOD
+        //lisaSündmusedNuppudele(teiseTeemaNupud,"Autod");
+
+
+        return mänguRuudustik;
     }
 
 
@@ -360,7 +346,6 @@ public class Kuldvillak extends Application {
             if (teema.equals(loositav_küsimus.getTeema()) && loositav_küsimus.getVäärtus() == väärtus) {
                 return loositav_küsimus;
             }
-
         }
     }
 
@@ -380,6 +365,7 @@ public class Kuldvillak extends Application {
         Text tekst = new Text(uus_küsimus.getKüsimus());
         tekst.setFont(new Font(15));
 
+        // valikuvariandid
         CheckBox valik1 = new CheckBox(uus_küsimus.getVastus1());
         valik1.setFont(new Font(13));
         CheckBox valik2 = new CheckBox(uus_küsimus.getVastus2());
@@ -389,7 +375,7 @@ public class Kuldvillak extends Application {
         CheckBox valik4 = new CheckBox(uus_küsimus.getVastus4());
         valik1.setFont(new Font(13));
 
-
+        // vastamise nupp
         Button vastaNupp = new Button();
         vastaNupp.setPrefSize(50, 30);
         vastaNupp.setText("Vasta");
@@ -428,7 +414,7 @@ public class Kuldvillak extends Application {
                                   CheckBox valik4, VBox vbox, Text tekst, Küsimus küsimus, Stage küsimuseAken){
         if(valik1.isSelected() && küsimus.getÕige_vastuse_nr() == 0 && !valik2.isSelected()
                 && !valik3.isSelected() && !valik4.isSelected()){
-            tekst.setText("Sinu vastus on õige. Said juurde: " + küsimus.getVäärtus() + " punkti");
+            tekst.setText("Sinu vastus on õige.\nSaid juurde: " + küsimus.getVäärtus() + " punkti");
             tekst.setFill(Color.GREEN);
             valik1.setTextFill(Color.GREEN);
             valik2.setTextFill(Color.RED);
@@ -436,7 +422,7 @@ public class Kuldvillak extends Application {
             valik4.setTextFill(Color.RED);
         } else if(valik2.isSelected() && küsimus.getÕige_vastuse_nr() == 1 && !valik1.isSelected()
                 && !valik3.isSelected() && !valik4.isSelected()) {
-            tekst.setText("Sinu vastus on õige. Said juurde: " + küsimus.getVäärtus() + " punkti");
+            tekst.setText("Sinu vastus on õige.\nSaid juurde: " + küsimus.getVäärtus() + " punkti");
             tekst.setFill(Color.GREEN);
             valik2.setTextFill(Color.GREEN);
             valik1.setTextFill(Color.RED);
@@ -444,7 +430,7 @@ public class Kuldvillak extends Application {
             valik4.setTextFill(Color.RED);
         } else if(valik3.isSelected() && küsimus.getÕige_vastuse_nr() == 2 && !valik1.isSelected()
                 && !valik2.isSelected() && !valik4.isSelected()) {
-            tekst.setText("Sinu vastus on õige. Said juurde: " + küsimus.getVäärtus() + " punkti");
+            tekst.setText("Sinu vastus on õige.\nSaid juurde: " + küsimus.getVäärtus() + " punkti");
             tekst.setFill(Color.GREEN);
             valik3.setTextFill(Color.GREEN);
             valik2.setTextFill(Color.RED);
@@ -452,7 +438,7 @@ public class Kuldvillak extends Application {
             valik4.setTextFill(Color.RED);
         } else if(valik4.isSelected() && küsimus.getÕige_vastuse_nr() == 3 && !valik1.isSelected()
                 && !valik2.isSelected() && !valik3.isSelected()) {
-            tekst.setText("Sinu vastus on õige. Said juurde: " + küsimus.getVäärtus() + " punkti");
+            tekst.setText("Sinu vastus on õige.\nSaid juurde: " + küsimus.getVäärtus() + " punkti");
             tekst.setFill(Color.GREEN);
             valik4.setTextFill(Color.GREEN);
             valik1.setTextFill(Color.RED);
@@ -462,7 +448,7 @@ public class Kuldvillak extends Application {
         else{
             tekst.setText("Sinu vastus on vale.");
             tekst.setFill(Color.RED);
-            Text õigeVastus = new Text("Õige(d) vastused:" + System.lineSeparator() + "\t" + küsimus.getÕigeVastus());
+            Text õigeVastus = new Text("Õige vastus:" + System.lineSeparator() + "\t" + küsimus.getÕigeVastus());
             vbox.getChildren().add(õigeVastus);
         }
 
