@@ -197,7 +197,7 @@ public class Kuldvillak extends Application {
         Label teema1 = new Label("Sport".toUpperCase());
         Label teema2 = new Label("Ajalugu".toUpperCase());
         Label teema3 = new Label("Varia".toUpperCase());
-        Label teema4 = new Label("Sekslelud".toUpperCase());
+        Label teema4 = new Label("Ralli".toUpperCase());
         Label teema5 = new Label("Autod".toUpperCase());
 
         List<Label> teemad = Arrays.asList(teema1, teema2, teema3, teema4, teema5);
@@ -260,16 +260,16 @@ public class Kuldvillak extends Application {
         lisaSündmusedNuppudele(esimeseTeemaNupud,"Sport");
 
         // Teema: AJALUGU
-        //lisaSündmusedNuppudele(teiseTeemaNupud,"Ajalugu");
+        lisaSündmusedNuppudele(teiseTeemaNupud,"Ajalugu");
 
         // Teema: VARIA
-        //lisaSündmusedNuppudele(teiseTeemaNupud,"Varia");
+        lisaSündmusedNuppudele(kolmandaTeemaNupud,"Varia");
 
-        // Teema: SEKSLELUD aga mis tglt xd
-        //lisaSündmusedNuppudele(teiseTeemaNupud,"Sekslelud");
+        // Teema: RALLI
+        lisaSündmusedNuppudele(neljandaTeemaNupud,"Ralli");
 
         // Teema: AUTOD
-        //lisaSündmusedNuppudele(teiseTeemaNupud,"Autod");
+        lisaSündmusedNuppudele(viiendaTeemaNupud,"Autod");
 
 
         return mänguRuudustik;
