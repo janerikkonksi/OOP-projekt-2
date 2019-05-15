@@ -21,5 +21,5 @@ Ajalugu;Kes oli Eesti esimene president?;Arnold Rüütel;Lennart Meri;Konstantin
 Sport;Mitu medalit võistid eesti sportlased 2014. aastal rahvusvahelistelt tiitlivõistlustelt?;122;129;138;141;2;300
 Sport;Kes Eesti poliitikutest on olnud edukas võrkpallur?;Arnold Rüütel;Hanno Pevkur;Kersti Kaljulaid;Jüri Ratas;0;400
 Sport;Milline klubi on läbi ajaloo NBA edukaim?(enim tiitleid);Boston Celtics;Minneapolis/Los Angeles Lakers;Chicago Bulls;Miami Heat;0;500
-Sport;Soome rallit kutusutakse 1000 järve ralliks, millist rallit kutsutakse 10 000 kurvi ralliks?;Sardiinia ralli;Korsika ralli;Uus-Meremaa ralli; Kataloonia ralli;1;100
+Sport;Soome rallit kutsutakse 1000 järve ralliks, millist rallit kutsutakse 10 000 kurvi ralliks?;Sardiinia ralli;Korsika ralli;Uus-Meremaa ralli;Kataloonia ralli;1;100
 Sport;USA-s on OM toimunud 8 korral, aga vaid üks eestlane on seal kuldmedali võitnud-kes?;Erki Nool;Andrus Veerpalu;Kristina Šmigun-Vähi;Aavo Pikkuus;1;200

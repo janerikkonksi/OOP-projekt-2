@@ -11,6 +11,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -34,6 +35,10 @@ public class Kuldvillak extends Application {
     Mängija mängija2=null;
     Mängija mängija3=null;
 
+    // Mängijate punktid
+    Label mängija1punktid = new Label();
+    Label mängija2punktid = new Label();
+    Label mängija3punktid = new Label();
 
     public static void main(String[] args) {
         launch(args);
@@ -45,7 +50,7 @@ public class Kuldvillak extends Application {
 
         this.peaLava = peaLava;
         peaLava.setTitle("Kuldvillak");
-        // ikooni lisamine
+        // ikooni lisamine aknale
         peaLava.getIcons().add(new Image("https://images-na.ssl-images-amazon.com/images/I/31M2GpmH5VL.png"));
 
         // mängijate arvu küsimine ja mängijate lisamine
@@ -54,7 +59,7 @@ public class Kuldvillak extends Application {
         // juure ja stseeni loomine
         BorderPane juur = new BorderPane();
         juur.setPadding(new Insets(5));
-        Scene scene = new Scene(juur, 750, 500);
+        Scene scene = new Scene(juur, 800, 570);
         scene.getStylesheets().add("style.css");  //css lisamine
         peaLava.setScene(scene);
 
@@ -68,6 +73,10 @@ public class Kuldvillak extends Application {
         // MÄNGURUUDUSTIKU LOOMINE
         GridPane valikuteRuudustik = mänguruudustikuLoomine();
         juur.setCenter(valikuteRuudustik);
+
+        // Punktiriba
+        HBox punktiriba = punktiRibaLoomine();
+        juur.setBottom(punktiriba);
 
         // sündmuse lisamine, kui soovitakse mängu sulgeda
         aknaSulgemiseKinnitus(peaLava,"Kas soovite tõesti mängimise lõpetada?");
@@ -125,7 +134,8 @@ public class Kuldvillak extends Application {
      * Küsib mängijate arvu, ning seejärel loob mängijad, küsides iga mängija nime.
      */
     public void mängijateLisamine(){
-        // mängijate arvu küsimine
+        // mängijate arvu küsimist hetkel pole kasutusel, sest mäng toimib praegu ainult ühe mängijaga
+    /*    // Mängijate arvu küsimise aken
         ChoiceDialog arvuKüsimine = new ChoiceDialog();
         arvuKüsimine.setTitle("");
         arvuKüsimine.setHeaderText("Kuldvillak");
@@ -145,8 +155,9 @@ public class Kuldvillak extends Application {
         else {
             System.exit(0);
         }
+    */
 
-
+        // Mängija nime küsimise aken
         TextInputDialog dialog = new TextInputDialog();
         dialog.setTitle("");
         dialog.setHeaderText("Kuldvillak");
@@ -154,14 +165,12 @@ public class Kuldvillak extends Application {
 
         String nimi = "";
         Optional<String> result = dialog.showAndWait();
-
         if (result.isPresent()){
             nimi = result.get();
         }
         else {
             System.exit(0);
         }
-
         //Loon sisendi põhjal uue mängija
         Mängija uus_mängija = new Mängija(nimi);
         this.mängija1=uus_mängija;
@@ -272,6 +281,28 @@ public class Kuldvillak extends Application {
 
 
         return mänguRuudustik;
+    }
+
+    /**
+     *
+     */
+    public HBox punktiRibaLoomine(){
+        HBox punktiriba = new HBox();
+        punktiriba.setPadding(new Insets(5,20,5,20));
+
+        if(mängijateArv>=1) {
+            mängija1punktid.setText(mängija1.getNimi() + ": " + mängija1.getPunktid());
+        }
+        if(mängijateArv>=2) {
+            mängija2punktid.setText(mängija2.getNimi()+": " + mängija2.getPunktid());
+        }
+        if(mängijateArv>=3) {
+            mängija3punktid.setText(mängija3.getNimi() + ": " + mängija3.getPunktid());
+        }
+
+        punktiriba.getChildren().addAll(mängija1punktid,mängija2punktid,mängija3punktid);
+
+        return punktiriba;
     }
 
 
@@ -396,6 +427,9 @@ public class Kuldvillak extends Application {
     public void küsimuseAken(Küsimus uus_küsimus) {
 
         Stage küsimuseAken = new Stage();
+        //küsimuseAken.setHeight(380);
+        //küsimuseAken.setWidth(700);
+        küsimuseAken.initStyle(StageStyle.UTILITY);
         Group juur = new Group();
         VBox vbox = new VBox(20);
         vbox.setPadding(new Insets(30));
@@ -418,7 +452,7 @@ public class Kuldvillak extends Application {
 
         // vastamise nupp
         Button vastaNupp = new Button();
-        vastaNupp.setPrefSize(80, 30);
+        //vastaNupp.setPrefSize(80, 30);
         vastaNupp.setText("Vasta");
 
         // vastamisel antakse tagasisidet
@@ -433,9 +467,10 @@ public class Kuldvillak extends Application {
         juur.getChildren().add(vbox);
 
         // stseeni loomine
-        Scene stageScene = new Scene(juur, 700, 350);
+        Scene stageScene = new Scene(juur, 700, 380, Color.LIGHTBLUE);
+        stageScene.getStylesheets().add("küsimuseaken.css");
+        tekst.getStyleClass().add("tekst");
         küsimuseAken.setScene(stageScene);
-        küsimuseAken.setTitle("Küsimus");
         küsimuseAken.setResizable(false);
         küsimuseAken.show();
         küsimuseAken.setAlwaysOnTop(true);
@@ -489,6 +524,8 @@ public class Kuldvillak extends Application {
         } else {
             tagasiside.setText("Sinu vastus on vale.");
             tagasiside.setFill(Color.RED);
+            mängija1.vähendaPunkte(küsimus.getVäärtus());
+            mängija1punktid.setText(mängija1.getNimi() + ": " + mängija1.getPunktid());
         }
 
         // pärast õigesti vastamist ei saa enam uuesti vastusevariante valida ega vasta nupule vajutada
@@ -499,6 +536,8 @@ public class Kuldvillak extends Application {
             valik4.setDisable(true);
             nupp.setDisable(true);
             vastamisteArv=1;
+            mängija1.suurendaPunkte(küsimus.getVäärtus());
+            mängija1punktid.setText(mängija1.getNimi() + ": " + mängija1.getPunktid());
 
             // kui on küsimusele vastatud, siis küsimuse akent sulgedes ei küsita kinnitust sulgemise kohta
             küsimuseAken.setOnCloseRequest(event -> küsimuseAken.hide());

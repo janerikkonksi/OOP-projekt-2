@@ -1,18 +1,15 @@
 .root{
-    -fx-background-color: #05037a;
-    -fx-font-size: 11pt;
-    -fx-border-width: 0;
+    -fx-font: 10pt "helvetica";
 }
 
-.label{
-    -fx-text-fill: #ff9400;
-    -fx-font: bold 22pt "helvetica";
+.radio-button{
+    -fx-font: 11pt "helvetica";
 }
 
 .button{
     -fx-background-color: linear-gradient(blue, #001538);
-    -fx-background-radius: 7;
-    -fx-font: bold 22pt "Tahoma";
+    -fx-background-radius: 5;
+    -fx-font: bold 12pt "Tahoma";
     -fx-text-fill: "Orange";
     -fx-text-shadow: 10pt 10pt;
     -fx-effect: dropshadow(one-pass-box , blue , 5 , 0.0 , 1 , 0 );
@@ -23,7 +20,6 @@
     -fx-cursor: hand;
 }
 
-.text-area{
-     -fx-background-color: black;
-     -fx-background-radius: 0;
+.tekst{
+    -fx-font: 12pt "helvetica";
 }

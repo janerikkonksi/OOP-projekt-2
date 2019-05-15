@@ -8,6 +8,14 @@ public class Mängija {
         this.punktid = 0;
     }
 
+    public String getNimi() {
+        return nimi;
+    }
+
+    public int getPunktid() {
+        return punktid;
+    }
+
     public void suurendaPunkte(int küsimuseVäärtus) {
         this.punktid += küsimuseVäärtus;
     }

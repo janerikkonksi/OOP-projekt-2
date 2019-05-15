@@ -22,7 +22,7 @@ sourceSets {
     main {
         resources {
             srcDirs = ["src/main/java"]
-            includes = ["style.css"]
+            includes = ["style.css","küsimuseaken.css"]
         }
     }
 }
