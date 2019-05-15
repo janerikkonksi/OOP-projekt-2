@@ -11,7 +11,6 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -406,14 +405,16 @@ public class Kuldvillak extends Application {
         tekst.setFont(new Font(15));
 
         // valikuvariandid
-        CheckBox valik1 = new CheckBox(uus_küsimus.getVastus1());
+        RadioButton valik1 = new RadioButton(uus_küsimus.getVastus1());
         valik1.setFont(new Font(13));
-        CheckBox valik2 = new CheckBox(uus_küsimus.getVastus2());
-        valik1.setFont(new Font(13));
-        CheckBox valik3 = new CheckBox(uus_küsimus.getVastus3());
-        valik1.setFont(new Font(13));
-        CheckBox valik4 = new CheckBox(uus_küsimus.getVastus4());
-        valik1.setFont(new Font(13));
+        RadioButton valik2 = new RadioButton(uus_küsimus.getVastus2());
+        valik2.setFont(new Font(13));
+        RadioButton valik3 = new RadioButton(uus_küsimus.getVastus3());
+        valik3.setFont(new Font(13));
+        RadioButton valik4 = new RadioButton(uus_küsimus.getVastus4());
+        valik4.setFont(new Font(13));
+        ToggleGroup valikud = new ToggleGroup();
+        valikud.getToggles().addAll(valik1,valik2,valik3,valik4);
 
         // vastamise nupp
         Button vastaNupp = new Button();
@@ -450,7 +451,7 @@ public class Kuldvillak extends Application {
     /**
      * Annab antud küsimuse aknas olevale küsimusele vastates samas aknas tagasisidet.
      */
-    public void tagasiside(Button nupp,CheckBox valik1, CheckBox valik2, CheckBox valik3,CheckBox valik4,
+    public void tagasiside(Button nupp,RadioButton valik1, RadioButton valik2, RadioButton valik3,RadioButton valik4,
                       Text tagasiside, Text õigeVastus, Küsimus küsimus, Stage küsimuseAken){
 
         if (valik1.isSelected() && küsimus.getÕige_vastuse_nr() == 0 && !valik2.isSelected()
@@ -521,6 +522,5 @@ public class Kuldvillak extends Application {
             vastamisteArv += 1;
         }
     }
-
 
 }
