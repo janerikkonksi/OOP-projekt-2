@@ -374,8 +374,6 @@ public class Kuldvillak extends Application {
 
         Küsimus loositav_küsimus;
 
-        // No see lahendus suht halb, pigem võiks sisselugemisel juba teemade ja väärtuste järgi jagada
-        // aga noh tuleks liiga palju liste ja see töötab xd :D :D
         while (true) {
             int max = küsimused.size();
             int min = 0;
