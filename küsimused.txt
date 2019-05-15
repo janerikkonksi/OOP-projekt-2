@@ -1,10 +1,10 @@
 Ralli;Lisaks Tšiili rallile on Ott Tänak võitnud sellel hooajal ka järgmise ralli:;Monte Carlo;Rootsi;Mehhiko;Korsika;1;500
-Ralli;Täpselt nii palju punkte on hetkel Ott Tänaku ja Sebastien Ogieri vahel üldkokkuvõttes:;96;102;110;116;2;400
+Ralli;Kui palju punkte on hetkel Ott Tänaku ja Sebastien Ogieri vahel üldkokkuvõttes:;96;102;110;116;2;400
 Ralli;Just seal toimub WRC ralli järgmine etapp:;Sardiinia;Soome;Saksamaa;Portugal;3;300
 Ralli;Just nii palju kiiruskatseid võitis 2017. rallihooajal Thierry Neuville:;17;26;40;56;3;200
 Ralli;Kes on autoralli MM sarja sõitjatest noorim?;Ott Tänak;Kalle Rovanperä;Esapekka Lappi;Elfyn Evans;1;100
 Autod;Mida sai iga Turkmenistani autojuht riigilt kuni 2014. aastani?;Sõidueksami sooritamisel lilled;Igal aastal uued rehvid;120 liitrit tasuta kütust kuus;Iga 5 aasta tagant tasuta uue auto;2;500
-Autod;Kui kiiresti sõitis maailma esimene kiiruseületamise eest trahvi saanud autojuht?(Londonis aastal 1896);33 km/h;13 km/h;52 km/h;4 km/h;1;400
+Autod;Kui kiiresti sõitis maailma esimene kiiruseületamise eest trahvi saanud autojuht?;33 km/h;13 km/h;52 km/h;4 km/h;1;400
 Autod;Mis linnas on maailma kalleim parkimine?;Zürich;London;Tokyo;New York;3;300
 Autod;Milline on enimmüüdud automudel läbi aegade?;Ford Focus;Toyota Corolla;Morris Mini;Volkswagen Golf;1;200
 Autod;Millist värvi autosid on maailmas kõige rohkem?;Punaseid;Musti;Valgeid;Hõbedasi;2;100
@@ -18,8 +18,8 @@ Ajalugu;Milline linn sai 1901. aastal endale esimese eestlasest linnapea?;Võru;
 Ajalugu;Kus loeti 23. veebruaril 1918 esmakordselt ette Eesti iseseisvus manifest?;Pärnus;Haapsalus;Tallinnas;Tartus;0;300
 Ajalugu;Mis aastal toimus Jüriöö ülestõus?;1323;1333;1343;1353;2;100
 Ajalugu;Kes oli Eesti esimene president?;Arnold Rüütel;Lennart Meri;Konstantin Päts;Toomas Hendrik Ilves;2;200
-Sport;Mitu medalit võistid eesti sportlased 2014. aastal EOK andmetel rahvusvahelistelt tiitlivõistlustelt?;122;129;138;141;2;300
+Sport;Mitu medalit võistid eesti sportlased 2014. aastal rahvusvahelistelt tiitlivõistlustelt?;122;129;138;141;2;300
 Sport;Kes Eesti poliitikutest on olnud edukas võrkpallur?;Arnold Rüütel;Hanno Pevkur;Kersti Kaljulaid;Jüri Ratas;0;400
 Sport;Milline klubi on läbi ajaloo NBA edukaim?(enim tiitleid);Boston Celtics;Minneapolis/Los Angeles Lakers;Chicago Bulls;Miami Heat;0;500
 Sport;Soome rallit kutusutakse 1000 järve ralliks, millist rallit kutsutakse 10 000 kurvi ralliks?;Sardiinia ralli;Korsika ralli;Uus-Meremaa ralli; Kataloonia ralli;1;100
-Sport;USA-s on olümpiamängud toimunud 8 korral, aga vaid üks eestlane on seal kuldmedali võitnud - kes?;Erki Nool;Andrus Veerpalu;Kristina Šmigun-Vähi;Aavo Pikkuus;1;200
+Sport;USA-s on OM toimunud 8 korral, aga vaid üks eestlane on seal kuldmedali võitnud-kes?;Erki Nool;Andrus Veerpalu;Kristina Šmigun-Vähi;Aavo Pikkuus;1;200

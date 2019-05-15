@@ -419,7 +419,7 @@ public class Kuldvillak extends Application {
 
         // vastamise nupp
         Button vastaNupp = new Button();
-        vastaNupp.setPrefSize(50, 30);
+        vastaNupp.setPrefSize(80, 30);
         vastaNupp.setText("Vasta");
 
         // vastamisel antakse tagasisidet
@@ -434,7 +434,7 @@ public class Kuldvillak extends Application {
         juur.getChildren().add(vbox);
 
         // stseeni loomine
-        Scene stageScene = new Scene(juur, 550, 350);
+        Scene stageScene = new Scene(juur, 700, 350);
         küsimuseAken.setScene(stageScene);
         küsimuseAken.setTitle("Küsimus");
         küsimuseAken.setResizable(false);
