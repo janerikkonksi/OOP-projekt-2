@@ -40,6 +40,7 @@ public class Kuldvillak extends Application {
     Label mängija2punktid = new Label();
     Label mängija3punktid = new Label();
 
+
     public static void main(String[] args) {
         launch(args);
     }
@@ -129,6 +130,19 @@ public class Kuldvillak extends Application {
 
         return küsimute_list;
     }
+
+    //Meetod kirjutab faili mängija nime ja lõppskoori
+
+    public void failiKirjutamine() {
+        String fileContent ="Nimi: " + mängija1.getNimi() + " skoor: " + mängija1.getPunktid();
+        try {
+            PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("kuldvillaku_tulemused.txt", true)));
+            out.println(fileContent);
+            out.close();
+        } catch (IOException e) {
+        }
+    }
+
 
     /**
      * Küsib mängijate arvu, ning seejärel loob mängijad, küsides iga mängija nime.
@@ -339,6 +353,9 @@ public class Kuldvillak extends Application {
             Stage kusimus = new Stage();
             // küsimuse ja kahe nupu loomine
             Label label = new Label(sõnum);
+
+            failiKirjutamine(); //iga kord kui aken suletakse, siis kirjutatakse mängija lõpptulemus faili
+
             Button okButton = new Button("Jah");
             Button cancelButton = new Button("Ei");
 
@@ -539,6 +556,7 @@ public class Kuldvillak extends Application {
             mängija1.suurendaPunkte(küsimus.getVäärtus());
             mängija1punktid.setText(mängija1.getNimi() + ": " + mängija1.getPunktid());
 
+
             // kui on küsimusele vastatud, siis küsimuse akent sulgedes ei küsita kinnitust sulgemise kohta
             küsimuseAken.setOnCloseRequest(event -> küsimuseAken.hide());
         }
@@ -552,6 +570,7 @@ public class Kuldvillak extends Application {
             valik4.setDisable(true);
             nupp.setDisable(true);
             vastamisteArv=1;
+
 
             // kui on küsimusele vastatud, siis küsimuse akent sulgedes ei küsita kinnitust sulgemise kohta
             küsimuseAken.setOnCloseRequest(event -> küsimuseAken.hide());
