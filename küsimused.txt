@@ -11,9 +11,9 @@ Autod;Millist värvi autosid on maailmas kõige rohkem?;Punaseid;Musti;Valgeid;H
 Varia;Mitu Eesti saart on suuremad kui 100 ruutkilomeetrilt?;1;2;3;4;2;500
 Varia;Mitu selgroolüli on inimesel?;24;23;22;21;0;400
 Varia;Mis linna oli oma hukkumisööl teel reisilaev Estonia?;Helsingi;Tallinn;Stockholm;Vantaa;2;300
-Varia;Tema esindas Eestis 2011. aastal Eurovisioonil:;Getter Jaani;Elina Born;Jüri Pootsmann;Kreisiraadio;0;200
+Varia;Tema esindas Eestit 2011. aastal Eurovisioonil:;Getter Jaani;Elina Born;Jüri Pootsmann;Kreisiraadio;0;200
 Varia;Selles osas võitlesid Männi, Siid ning Diego piraatitega:;Jääaeg 1;Jääaeg 2;Jääaeg 3;Jääaeg 4;3;100
-Ajalugu;Mis kelles toimus õppetöö 1632. aastal avatud Tartu Ülikoolis?;Rootsi;Saksa;Ladina;Eesti;2;500
+Ajalugu;Mis keeles toimus õppetöö 1632. aastal avatud Tartu Ülikoolis?;Rootsi;Saksa;Ladina;Eesti;2;500
 Ajalugu;Milline linn sai 1901. aastal endale esimese eestlasest linnapea?;Võru;Valga;Viljandi;Võnnu;1;400
 Ajalugu;Kus loeti 23. veebruaril 1918 esmakordselt ette Eesti iseseisvus manifest?;Pärnus;Haapsalus;Tallinnas;Tartus;0;300
 Ajalugu;Mis aastal toimus Jüriöö ülestõus?;1323;1333;1343;1353;2;100
