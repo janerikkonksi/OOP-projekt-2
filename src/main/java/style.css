@@ -1,7 +1,5 @@
 .root{
-    -fx-background-color: #05037a;
-    -fx-font-size: 11pt;
-    -fx-border-width: 0;
+     -fx-background-color: #05037a;
 }
 
 .label{
@@ -22,8 +20,6 @@
     -fx-text-fill: "Yellow";
     -fx-cursor: hand;
 }
-
-.text-area{
-     -fx-background-color: black;
-     -fx-background-radius: 0;
+.button:disabled{
+    -fx-opacity: 0;
 }
