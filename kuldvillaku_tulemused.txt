@@ -1,0 +1,5 @@
+Nimi: Mikko skoor: 0
+Nimi: Mikko skoor: 100
+Nimi: mikko skoor: -100
+Nimi: mikko skoor: 100
+Nimi: Mikko skoor: -100

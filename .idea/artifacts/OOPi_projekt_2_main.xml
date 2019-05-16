@@ -1,0 +1,10 @@
+<component name="ArtifactManager">
+  <artifact type="javafx" name="OOPi-projekt-2.main">
+    <output-path>$PROJECT_DIR$/classes/artifacts/OOPi_projekt_2_main</output-path>
+    <root id="root">
+      <element id="archive" name="OOPi_projekt_2_main.jar">
+        <element id="module-output" name="OOPi-projekt-2.main" />
+      </element>
+    </root>
+  </artifact>
+</component>
